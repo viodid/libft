@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef unsigned long long size_t ;
+#include "libft.h"
 
 void	*ft_memchr(const void *b, int c, size_t len)
 {

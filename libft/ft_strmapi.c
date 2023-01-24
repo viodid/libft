@@ -12,21 +12,27 @@
 
 #include "libft.h"
 
-/* Allocates (with malloc(3)) and returns a new
-string, which is the result of the concatenation
-of ’s1’ and ’s2’. */
+/* Applies the function ’f’ to each character of the
+string ’s’, and passing its index as first argument
+to create a new string (with malloc(3)) resulting
+from successive applications of ’f’. */
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*s3;
+	int		i;
+	char	*ptr;
 
-	if (!s1 || !s2)
+	if (!s)
 		return (NULL);
-	s3 = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!s3)
+	i = 0;
+	ptr = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
+	if (!ptr)
 		return (NULL);
-	ft_memmove(s3, s1, ft_strlen(s1));
-	ft_memmove(s3 + ft_strlen(s1), s2, ft_strlen(s2));
-	s3[ft_strlen(s1) + ft_strlen(s2)] = '\0';
-	return (s3);
+	while (s[i])
+	{
+		ptr[i] = f(i, s[i]);
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
 }

@@ -11,22 +11,47 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-/* Allocates (with malloc(3)) and returns a new
-string, which is the result of the concatenation
-of ’s1’ and ’s2’. */
+/* Allocates (with malloc(3)) and returns a copy of
+’s1’ with the characters specified in ’set’ removed
+from the beginning and the end of the string. */
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char *ft_strtrim(char const *s1, char const *set)
 {
-	char	*s3;
+	char	*ptr;
 
-	if (!s1 || !s2)
+	char *end = (char *)s1;
+
+	if (!s1)
 		return (NULL);
-	s3 = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!s3)
+	if (!set)
+		return((char *)s1);
+	while (ft_strchr(set, (int)*s1))
+	{
+		s1++;
+	}
+	while (*end)
+		end++;
+	while (ft_strrchr(set, (int)*end))
+	{
+		end--;
+	}
+	end++;
+	size_t	len = 0;
+	while (s1 != end--)
+	{
+		len++;
+		if (len > 1000)
+			return ("");
+	}
+	ptr = (char *)malloc(sizeof(char) * len + 1);
+	if(!ptr)
 		return (NULL);
-	ft_memmove(s3, s1, ft_strlen(s1));
-	ft_memmove(s3 + ft_strlen(s1), s2, ft_strlen(s2));
-	s3[ft_strlen(s1) + ft_strlen(s2)] = '\0';
-	return (s3);
+	char *str_ptr = ptr;
+	while (len--)
+		*ptr++ = *s1++;
+	*ptr = '\0';
+	return (str_ptr);
 }

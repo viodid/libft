@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef unsigned long long size_t;
+#include "libft.h"
+
+static int	check_substring(const char *big, const char *little, size_t len);
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
@@ -18,6 +20,24 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		return ((char *)big);
 	while (len-- && *big)
 	{
-		
+		if (*big == *little)
+		{
+			if (check_substring(big, little, len + 1))
+				return ((char *)big);
+		}
+		big++;
 	}
+	return (0);
+}
+
+static int	check_substring(const char *big, const char *little, size_t len)
+{
+	while (len-- && *little)
+	{
+		if (*little++ != *big++)
+			return (0);
+	}
+	if (*little)
+		return (0);
+	return (1);
 }

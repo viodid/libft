@@ -10,18 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// https://stackoverflow.com/questions/11598361/why-a-pointer-1-add-4-actually
-
-#include "libft.h"
-
-int	ft_memcmp(const void *b1, const void *b2, size_t len)
+int	ft_atoi(const char *nptr)
 {
-	while (len--)
+	int	i;
+	int	sign;
+	int	res;
+
+	i = 0;
+	sign = 1;
+	res = 0;
+	while (nptr[i] == ' ' || nptr[i] == '\t' || nptr[i] == '\n'
+		|| nptr[i] == '\v' || nptr[i] == '\f' || nptr[i] == '\r')
+		i++;
+	if (nptr[i] == '-')
 	{
-		if (*(unsigned char *)b1 != *(unsigned char *)b2)
-			return (*(unsigned char *)b1 - *(unsigned char *)b2);
-		b1++;
-		b2++;
+		sign = -1;
+		i++;
 	}
-	return (0);
+	else if (nptr[i] == '+')
+		i++;
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		res = res * 10 + (int)nptr[i] - '0';
+		i++;
+	}
+	return (res * sign);
 }

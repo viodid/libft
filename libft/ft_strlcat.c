@@ -10,17 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	ft_strlen(const char *s);
-
-typedef unsigned long long	size_t;
+#include "libft.h"
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	if (!dstsize)
-		return (ft_strlen(src));
 	size_t	i;
 	size_t	j;
 
+	if (!dstsize)
+		return (ft_strlen(src));
 	i = 0;
 	j = 0;
 	while (dst[i] && i < dstsize)
@@ -33,14 +31,4 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	if (i != dstsize)
 		dst[i + j] = '\0';
 	return (i + ft_strlen(src));
-}
-
-static int	ft_strlen(const char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
 }

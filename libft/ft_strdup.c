@@ -12,21 +12,19 @@
 
 #include "libft.h"
 
-/* Allocates (with malloc(3)) and returns a new
-string, which is the result of the concatenation
-of ’s1’ and ’s2’. */
-
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strdup(const char *str)
 {
-	char	*s3;
+	int		len;
+	char	*ptr;
+	char	*start_ptr;
 
-	if (!s1 || !s2)
+	len = ft_strlen(str);
+	ptr = (char *)malloc(len + 1);
+	if (!ptr)
 		return (NULL);
-	s3 = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!s3)
-		return (NULL);
-	ft_memmove(s3, s1, ft_strlen(s1));
-	ft_memmove(s3 + ft_strlen(s1), s2, ft_strlen(s2));
-	s3[ft_strlen(s1) + ft_strlen(s2)] = '\0';
-	return (s3);
+	start_ptr = ptr;
+	while (*str)
+		*ptr++ = *(char *)str++;
+	*ptr = '\0';
+	return (start_ptr);
 }

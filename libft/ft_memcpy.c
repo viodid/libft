@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef unsigned long long size_t;
+#include "libft.h"
 
-void *ft_memcpy(void *dst, const void *src, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	unsigned char *ptr;
+	unsigned char	*ptr;
 
 	ptr = (unsigned char *)dst;
 	while (n--)
@@ -25,4 +25,3 @@ void *ft_memcpy(void *dst, const void *src, size_t n)
 	}
 	return (dst);
 }
-

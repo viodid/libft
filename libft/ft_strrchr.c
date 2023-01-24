@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	ft_strlen(const char *s);
+#include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int i;
+	int	i;
 
 	i = ft_strlen(s);
 	while (i >= 0)
@@ -24,14 +24,4 @@ char	*ft_strrchr(const char *s, int c)
 		i--;
 	}
 	return (0);
-}
-
-static int	ft_strlen(const char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
 }

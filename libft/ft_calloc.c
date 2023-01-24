@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   headers.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyunta <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dyunta <dyunta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 16:50:49 by dyunta            #+#    #+#             */
-/*   Updated: 2023/01/10 16:51:31 by dyunta           ###   ########.fr       */
+/*   Created: 2022/11/21 22:40:09 by dyunta            #+#    #+#             */
+/*   Updated: 2022/11/24 12:30:21 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_toupper(int c)
+#include "libft.h"
+
+void	*ft_calloc(size_t number, size_t size)
 {
-	if (c >= 'a' && c <= 'z')
-		return (c - 32);
-	return (c);
+	void	*ptr;
+
+	ptr = malloc(number * size);
+	if (!ptr)
+		return (NULL);
+	ft_bzero(ptr, number * size);
+	return (ptr);
 }
