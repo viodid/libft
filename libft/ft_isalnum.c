@@ -13,6 +13,11 @@
 static int	ft_isalpha(int i);
 static int	ft_isdigit(int c);
 
+/*   The isalnum() function tests for any character for which isalpha(3) or
+     isdigit(3) is true.
+     The isalnum() function returns zero if the character tests false and
+     returns non-zero if the character tests true. */
+
 int	ft_isalnum(int c)
 {
 	if (ft_isalpha(c) || ft_isdigit(c))

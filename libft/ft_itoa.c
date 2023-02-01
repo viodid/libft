@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stddef.h>
-#include <stdlib.h>
 
 /* Allocates (with malloc(3)) and returns a string
 representing the integer received as an argument.

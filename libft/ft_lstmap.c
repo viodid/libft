@@ -12,28 +12,24 @@
 
 #include "libft.h"
 
-/* Outputs the integer ’n’ to the given file
-descriptor. */
+/* Iterates the list ’lst’ and applies the function
+’f’ on the content of each node. Creates a new
+list resulting of the successive applications of
+the function ’f’. The ’del’ function is used to
+delete the content of a node if needed. */
 
-void    ft_putnbr_fd(int nb, int fd)
+t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-    if (nb == -2147483648)
+    t_list  *ptr;
+
+    ptr = lst;
+    while (ptr)
     {
-        ft_putstr_fd("-2147483648", fd);
-        return ;
+        if (ptr->content)
+            del(ptr->content);
+        f(ptr->content);
+        ptr = ptr->next;
     }
-    if (nb < 0)
-    {
-        ft_putchar_fd('-', fd);
-        ft_putnbr_fd(-nb, fd);
-    }
-    else if (nb > 9)
-    {
-        ft_putnbr_fd(nb / 10, fd);
-        ft_putnbr_fd(nb % 10, fd);
-    }
-    else
-    {
-        ft_putchar_fd((char)nb + '0', fd);
-    }
+    return (lst);
 }
+

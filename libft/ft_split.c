@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 /* Allocates (with malloc(3)) and returns an array
 of strings obtained by splitting ’s’ using the
@@ -24,12 +22,11 @@ static const char	*get_str_till_c(char const *s, char c, char **ptr);
 
 char **ft_split(char const *s, char c)
 {
+    // TODO
 	char	**ptr;
 	size_t	different_strs;
 
-	printf("s: %s - c: %c, ", s, c);
-
-	if (!s || !*s)	
+	if (!s)
 		return (NULL);
 
 	different_strs = get_different_strs(s, c);

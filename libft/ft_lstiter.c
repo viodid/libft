@@ -12,28 +12,14 @@
 
 #include "libft.h"
 
-/* Outputs the integer ’n’ to the given file
-descriptor. */
+/* Iterates the list ’lst’ and applies the function
+’f’ on the content of each node. */
 
-void    ft_putnbr_fd(int nb, int fd)
+void ft_lstiter(t_list *lst, void (*f)(void *))
 {
-    if (nb == -2147483648)
+    while (lst)
     {
-        ft_putstr_fd("-2147483648", fd);
-        return ;
-    }
-    if (nb < 0)
-    {
-        ft_putchar_fd('-', fd);
-        ft_putnbr_fd(-nb, fd);
-    }
-    else if (nb > 9)
-    {
-        ft_putnbr_fd(nb / 10, fd);
-        ft_putnbr_fd(nb % 10, fd);
-    }
-    else
-    {
-        ft_putchar_fd((char)nb + '0', fd);
+        f(lst->content);
+        lst = lst->next;
     }
 }

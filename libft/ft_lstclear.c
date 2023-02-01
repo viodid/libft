@@ -11,29 +11,28 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-/* Outputs the integer ’n’ to the given file
-descriptor. */
+/* Deletes and frees the given node and every
+successor of that node, using the function ’del’
+and free(3).
+Finally, the pointer to the list must be set to
+NULL. */
 
-void    ft_putnbr_fd(int nb, int fd)
+void ft_lstclear(t_list **lst, void (*del)(void*))
 {
-    if (nb == -2147483648)
-    {
-        ft_putstr_fd("-2147483648", fd);
-        return ;
-    }
-    if (nb < 0)
-    {
-        ft_putchar_fd('-', fd);
-        ft_putnbr_fd(-nb, fd);
-    }
-    else if (nb > 9)
-    {
-        ft_putnbr_fd(nb / 10, fd);
-        ft_putnbr_fd(nb % 10, fd);
-    }
-    else
-    {
-        ft_putchar_fd((char)nb + '0', fd);
-    }
+	t_list	*ptr;
+	t_list	*next;
+
+	if (!lst || !del)
+		return;
+	ptr = *lst;
+	while (ptr)
+	{
+		next = ptr->next;
+        del(ptr->content);
+        free(ptr);
+		ptr = next;
+	}
+    *lst = NULL;
 }

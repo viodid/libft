@@ -12,28 +12,15 @@
 
 #include "libft.h"
 
-/* Outputs the integer ’n’ to the given file
-descriptor. */
+/* Takes as a parameter a node and frees the memory of
+the node’s content using the function ’del’ given
+as a parameter and free the node. The memory of
+’next’ must not be freed. */
 
-void    ft_putnbr_fd(int nb, int fd)
+void ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-    if (nb == -2147483648)
-    {
-        ft_putstr_fd("-2147483648", fd);
-        return ;
-    }
-    if (nb < 0)
-    {
-        ft_putchar_fd('-', fd);
-        ft_putnbr_fd(-nb, fd);
-    }
-    else if (nb > 9)
-    {
-        ft_putnbr_fd(nb / 10, fd);
-        ft_putnbr_fd(nb % 10, fd);
-    }
-    else
-    {
-        ft_putchar_fd((char)nb + '0', fd);
-    }
+	if (!lst || !del)
+		return ;
+	del(lst->content);
+	free(lst);
 }
