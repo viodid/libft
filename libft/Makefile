@@ -41,7 +41,6 @@ MY_SOURCES = ft_isalpha.c \
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 BONUS_SOURCES = ft_lstnew.c \
-					ft_lstnew.c \
 					ft_lstadd_front.c \
 					ft_lstsize.c \
 					ft_lstlast.c \

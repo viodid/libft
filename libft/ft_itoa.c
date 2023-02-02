@@ -17,7 +17,7 @@ representing the integer received as an argument.
 Negative numbers must be handled. */
 
 static int	get_int_len(long long n);
-static char	*reverse_str(char *str);
+static char	*reverse_str(char *str, int index);
 static int	checkers(long long n, char *buffer);
 
 char	*ft_itoa(int n)
@@ -46,8 +46,7 @@ char	*ft_itoa(int n)
 	}
 	if (is_neg)
 		buffer[i++] = '-';
-	buffer[i] = '\0';
-	return (reverse_str(buffer));
+	return (reverse_str(buffer, i));
 }
 
 static int	get_int_len(long long n)
@@ -65,16 +64,15 @@ static int	get_int_len(long long n)
 	return (i);
 }
 
-static char	*reverse_str(char *str)
+static char	*reverse_str(char *str, int index)
 {
 	char	aux;
 	int		i;
 	int		j;
-	int		len;
 
+	str[index] = '\0';
 	i = 0;
-	j = ft_strlen(str) - 1;
-	len = j;
+	j = (int)ft_strlen(str) - 1;
 	while (i < j)
 	{
 		aux = str[i];

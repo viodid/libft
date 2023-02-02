@@ -20,6 +20,7 @@ maximum size ’len’. */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
+	size_t	alloc_size;
 
 	if (!s)
 		return (NULL);
@@ -27,10 +28,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len > ft_strlen(s))
 		len = ft_strlen(s);
-	str = (char *)malloc(sizeof(char) * (len + 1));
+	alloc_size = ft_strlen(s) - start;
+	if (alloc_size > len)
+		alloc_size = len;
+	str = (char *)malloc(sizeof(char) * alloc_size + 1);
 	if (!str)
 		return (NULL);
-	ft_strlcpy(str, s + start, len + 1);
-	str[len] = '\0';
+	ft_strlcpy(str, s + start, alloc_size + 1);
 	return (str);
 }

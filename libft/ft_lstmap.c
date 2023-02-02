@@ -21,15 +21,22 @@ delete the content of a node if needed. */
 t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
     t_list  *ptr;
+    t_list  *new;
 
-    ptr = lst;
-    while (ptr)
+    if (!lst)
+        return (NULL);
+    new = NULL;
+    while (lst)
     {
-        if (ptr->content)
-            del(ptr->content);
+        ptr = ft_lstnew(lst->content);
+        if (!ptr)
+        {
+            del(lst);
+            return (NULL);
+        }
         f(ptr->content);
-        ptr = ptr->next;
+        ft_lstadd_back(&new, ptr);
+        lst = lst->next;
     }
-    return (lst);
+    return (new);
 }
-

@@ -17,14 +17,14 @@ of strings obtained by splitting ’s’ using the
 character ’c’ as a delimiter. The array must end
 with a NULL pointer. */
 
-static size_t	get_different_strs(char const *s, char c);
+static int	get_different_substr(char const *s, char c);
 static const char	*get_str_till_c(char const *s, char c, char **ptr);
 
 char **ft_split(char const *s, char c)
 {
     // TODO
 	char	**ptr;
-	size_t	different_strs;
+	int     different_strs;
 
 	if (!s)
 		return (NULL);
@@ -56,17 +56,16 @@ static size_t	get_len_till_c(char const *s, char c)
 	return (len);
 }
 
-static size_t	get_different_strs(char const *s, char c)
+static int	get_different_substr(char const *s, char c)
 {
-	size_t	different_strs;
-	size_t	i;
+	int different_strs;
+	int i;
 
 	different_strs = 0;
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == c && i != 0 && s[i + 1] != '\0' && s[i - 1] != c
-			&& s[i + 1] != c)
+		if (s[i] == c && i != 0 && s[i + 1] != '\0')
 			different_strs++;
 		i++;
 	}
