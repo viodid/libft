@@ -19,20 +19,20 @@ and free(3).
 Finally, the pointer to the list must be set to
 NULL. */
 
-void ft_lstclear(t_list **lst, void (*del)(void*))
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
 	t_list	*ptr;
 	t_list	*next;
 
 	if (!lst || !del)
-		return;
+		return ;
 	ptr = *lst;
 	while (ptr)
 	{
 		next = ptr->next;
-        del(ptr->content);
-        free(ptr);
+		del(ptr->content);
+		free(ptr);
 		ptr = next;
 	}
-    *lst = NULL;
+	*lst = NULL;
 }

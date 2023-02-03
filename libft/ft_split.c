@@ -17,92 +17,87 @@ of strings obtained by splitting ’s’ using the
 character ’c’ as a delimiter. The array must end
 with a NULL pointer. */
 
-static int	get_different_substr(char const *s, char c);
-static const char	*get_str_till_c(char const *s, char c, char **ptr);
+static int	count_different_substr(char const *s, char c);
+static char	**get_strs(char const *s, char c, char **ptr);
 
-char **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-    // TODO
 	char	**ptr;
-	int     different_strs;
+	int		different_strs;
 
 	if (!s)
 		return (NULL);
-
-	different_strs = get_different_strs(s, c);
-
+	different_strs = count_different_substr(s, c);
 	ptr = (char **)malloc(sizeof(char *) * different_strs);
 	if (!ptr)
 		return (NULL);
 	while (different_strs--)
 		ptr[different_strs] = NULL;
-
-
-	// get string till c or end of string
-	s = get_str_till_c(s, c, ptr);
-	while (*s++)
-		s = get_str_till_c(s, c, ptr);
-
-	return (ptr);
+	return (get_strs(s, c, ptr));
 }
 
-static size_t	get_len_till_c(char const *s, char c)
+static int	count_different_substr(char const *s, char c)
 {
-	size_t	len;
-
-	len = 0;
-	while (*s && *s++ != c)
-		len++;
-	return (len);
-}
-
-static int	get_different_substr(char const *s, char c)
-{
-	int different_strs;
-	int i;
+	int	different_strs;
+	int	i;
+	int	j;
+	int	len;
 
 	different_strs = 0;
 	i = 0;
-	while (s[i])
+	len = ft_strlen(s);
+	while (i < len)
 	{
-		if (s[i] == c && i != 0 && s[i + 1] != '\0')
+		while ((int)s[i] == (int)c && s[i])
+			i++;
+		j = i;
+		while ((int)s[i] != (int)c && s[i])
+			i++;
+		if (j < i)
 			different_strs++;
-		i++;
 	}
-	return (different_strs + 1);
+	return (different_strs);
 }
 
-static const char	*get_str_till_c(char const *s, char c, char **ptr)
+static int	alloc_from_buffer(char *buffer, char **ptr, int index)
 {
-	size_t	i;
-	size_t	len;
-	size_t	j;
-
-	if (!s)
-		return (NULL);
-	i = 0;
-	while (ptr[i])
-		i++;
-
-	len = get_len_till_c(s, c);
-	ptr[i] = (char *)malloc(sizeof(char) * len + 1);
-	if (!ptr[i])
-		return (NULL);
-
-	j = 0;
-	while (*s != c && *s)
-	{
-		ptr[i][j++] = *s++;
-	}
-	ptr[i][j] = '\0';
-	return (s);
-}
-
-/*
-int	main(void)
-{
-	char **output = ft_split("nopehnope", 'h');
-	printf("%s - %s\n", output[0], output[1]);
+	ptr[index] = (char *) malloc(sizeof(char)
+			* ft_strlen(buffer) + 1);
+	if (!ptr[index])
+		return (1);
+	ft_strlcpy(ptr[index], (const char *)buffer,
+		ft_strlen(buffer) + 1);
 	return (0);
 }
-*/
+
+static char	**get_strs(char const *s, char c, char **ptr)
+{
+	int		substr_index;
+	char	buffer[256];
+	int		i;
+	int		j;
+
+	substr_index = 0;
+	i = 0;
+	while (i < (int)ft_strlen(s))
+	{
+		j = 0;
+		while ((int)s[i] == (int)c && s[i])
+			i++;
+		if (!s[i])
+			break ;
+		while ((int)s[i] != c && s[i])
+			buffer[j++] = s[i++];
+		buffer[j] = '\0';
+		if (alloc_from_buffer(buffer, ptr, substr_index))
+			return (NULL);
+		substr_index++;
+	}
+	return (ptr);
+}
+
+int main(void)
+{
+	ft_split("hola!", 'o');
+	return (0);
+}
