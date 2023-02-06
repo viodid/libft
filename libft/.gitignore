@@ -1,1 +1,7 @@
 .idea
+*.o
+*.a
+.DS*
+.gitignore
+*.out
+*.a

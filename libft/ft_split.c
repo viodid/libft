@@ -61,10 +61,18 @@ static int	count_different_substr(char const *s, char c)
 
 static int	alloc_from_buffer(char *buffer, char **ptr, int index)
 {
+	int	i;
+
 	ptr[index] = (char *) malloc(sizeof(char)
 			* ft_strlen(buffer) + 1);
+	i = 0;
 	if (!ptr[index])
+	{
+		while (i <= index)
+			free(ptr[i++]);
+		free(ptr);
 		return (1);
+	}
 	ft_strlcpy(ptr[index], (const char *)buffer,
 		ft_strlen(buffer) + 1);
 	return (0);

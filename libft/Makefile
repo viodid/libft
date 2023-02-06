@@ -28,37 +28,42 @@ MY_SOURCES = ft_isalpha.c \
 						ft_strncmp.c \
 						ft_substr.c \
 						ft_strtrim.c \
-						ft_split.c \
-						ft_itoa.c \
 						ft_strmapi.c \
 						ft_striteri.c \
 						ft_putchar_fd.c \
 						ft_putstr_fd.c \
 						ft_putendl_fd.c \
-						ft_putnbr_fd.c
+						ft_putnbr_fd.c \
+						ft_itoa.c \
+						ft_split.c
+
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 BONUS_SOURCES = ft_lstnew_bonus.c \
-					ft_lstadd_front_bonus.c \
-					ft_lstsize_bonus.c \
-					ft_lstlast_bonus.c \
-					ft_lstadd_back_bonus.c \
-					ft_lstdelone_bonus.c \
-					ft_lstclear_bonus.c \
-					ft_lstiter_bonus.c \
-					ft_lstmap_bonus.c
-
+							ft_lstadd_front_bonus.c \
+							ft_lstsize_bonus.c \
+							ft_lstlast_bonus.c \
+							ft_lstadd_back_bonus.c \
+							ft_lstdelone_bonus.c \
+							ft_lstclear_bonus.c \
+							ft_lstiter_bonus.c \
+							ft_lstmap_bonus.c
 BONUS_OBJECTS = $(BONUS_SOURCES:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+
 $(NAME): $(MY_OBJECTS)
 	@ar r $(NAME) $(MY_OBJECTS)
+
 bonus: $(BONUS_OBJECTS)
 	@ar r $(NAME) $(BONUS_OBJECTS)
-all:    $(NAME)
+
+all:	$(NAME)
 clean:
 		@rm -f $(MY_OBJECTS)
+		@rm -f $(BONUS_OBJECTS)
 fclean: clean
 		@rm -f $(NAME)
+		 bonus: $(BONUS_OBJECTS)
 re: fclean all
 .PHONY: all clean fclean re
