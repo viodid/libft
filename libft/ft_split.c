@@ -45,7 +45,7 @@ static int	count_different_substr(char const *s, char c)
 
 	different_strs = 0;
 	i = 0;
-	len = ft_strlen(s);
+	len = (int)ft_strlen(s);
 	while (i < len)
 	{
 		while ((int)s[i] == (int)c && s[i])
@@ -94,10 +94,4 @@ static char	**get_strs(char const *s, char c, char **ptr)
 		substr_index++;
 	}
 	return (ptr);
-}
-
-int main(void)
-{
-	ft_split("hola!", 'o');
-	return (0);
 }
