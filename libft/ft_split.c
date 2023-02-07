@@ -68,7 +68,7 @@ static int	alloc_from_buffer(char *buffer, char **ptr, int index)
 	i = 0;
 	if (!ptr[index])
 	{
-		while (i <= index)
+		while (i < index)
 			free(ptr[i++]);
 		free(ptr);
 		return (1);

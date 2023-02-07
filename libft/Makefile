@@ -3,7 +3,7 @@ LIB = ar rcs
 NAME = libft.a
 
 MY_SOURCES = ft_isalpha.c \
-			 			ft_isdigit.c  \
+						ft_isdigit.c  \
 						ft_isalnum.c \
 						ft_isascii.c \
 						ft_isprint.c \
@@ -60,10 +60,8 @@ bonus: $(BONUS_OBJECTS)
 
 all:	$(NAME)
 clean:
-		@rm -f $(MY_OBJECTS)
-		@rm -f $(BONUS_OBJECTS)
+		rm -f $(MY_OBJECTS)
 fclean: clean
 		@rm -f $(NAME)
-		 bonus: $(BONUS_OBJECTS)
 re: fclean all
 .PHONY: all clean fclean re
