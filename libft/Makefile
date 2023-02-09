@@ -2,7 +2,7 @@ LIB = ar rcs
 
 NAME = libft.a
 
-MY_SOURCES = ft_isalpha.c \
+SRCS = ft_isalpha.c \
 						ft_isdigit.c  \
 						ft_isalnum.c \
 						ft_isascii.c \
@@ -38,8 +38,9 @@ MY_SOURCES = ft_isalpha.c \
 						ft_split.c
 
 
-MY_OBJECTS = $(MY_SOURCES:.c=.o)
-BONUS_SOURCES = ft_lstnew_bonus.c \
+OBJ = $(SRCS:.c=.o)
+
+BONUS_SRCS = ft_lstnew_bonus.c \
 							ft_lstadd_front_bonus.c \
 							ft_lstsize_bonus.c \
 							ft_lstlast_bonus.c \
@@ -48,20 +49,27 @@ BONUS_SOURCES = ft_lstnew_bonus.c \
 							ft_lstclear_bonus.c \
 							ft_lstiter_bonus.c \
 							ft_lstmap_bonus.c
-BONUS_OBJECTS = $(BONUS_SOURCES:.c=.o)
+
+BONUS_OBJ = $(BONUS_SRCS:.c=.o)
+
 CC = gcc
+
 CFLAGS = -Wall -Wextra -Werror
 
-$(NAME): $(MY_OBJECTS)
-	@ar r $(NAME) $(MY_OBJECTS)
+$(NAME): $(OBJ)
+	@ar r $(NAME) $(OBJ)
 
-bonus: $(BONUS_OBJECTS)
-	@ar r $(NAME) $(BONUS_OBJECTS)
+bonus: $(BONUS_OBJ)
+	@ar r $(NAME) $(BONUS_OBJ)
 
-all:	$(NAME)
+all: $(NAME) bonus
+
 clean:
-		rm -f $(MY_OBJECTS)
+	rm -f $(OBJ) $(BONUS_OBJ)
+
 fclean: clean
-		@rm -f $(NAME)
+	rm -f $(NAME)
+
 re: fclean all
+
 .PHONY: all clean fclean re

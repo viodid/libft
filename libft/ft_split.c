@@ -6,100 +6,104 @@
 /*   By: dyunta <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:50:49 by dyunta            #+#    #+#             */
-/*   Updated: 2023/01/10 16:51:31 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/02/08 18:31:27 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static char		**ft_free_malloc(char **tab);
+static void		ft_next_word(char **next_word, size_t *next_word_len, char c);
+static size_t	ft_nu_words(char const *s, char c);
 
 /* Allocates (with malloc(3)) and returns an array
 of strings obtained by splitting ’s’ using the
 character ’c’ as a delimiter. The array must end
 with a NULL pointer. */
 
-static int	count_different_substr(char const *s, char c);
-static char	**get_strs(char const *s, char c, char **ptr);
-
 char	**ft_split(char const *s, char c)
 {
-	char	**ptr;
-	int		different_strs;
+	char	**tab;
+	char	*next_word;
+	size_t	next_word_len;
+	size_t	i;
 
 	if (!s)
 		return (NULL);
-	different_strs = count_different_substr(s, c);
-	ptr = (char **)malloc(sizeof(char *) * different_strs);
-	if (!ptr)
+	tab = (char **)malloc(sizeof(char *) * (ft_nu_words(s, c) + 1));
+	if (!tab)
 		return (NULL);
-	while (different_strs--)
-		ptr[different_strs] = NULL;
-	return (get_strs(s, c, ptr));
+	i = 0;
+	next_word = (char *)s;
+	next_word_len = 0;
+	while (i < ft_nu_words(s, c))
+	{
+		ft_next_word(&next_word, &next_word_len, c);
+		tab[i] = (char *)malloc(sizeof(char) * (next_word_len + 1));
+		if (!tab[i])
+			return (ft_free_malloc(tab));
+		ft_strlcpy(tab[i], next_word, next_word_len + 1);
+		i++;
+	}
+	tab[i] = NULL;
+	return (tab);
 }
 
-static int	count_different_substr(char const *s, char c)
+static char	**ft_free_malloc(char **tab)
 {
-	int	different_strs;
-	int	i;
-	int	j;
-	int	len;
+	size_t	i;
 
-	different_strs = 0;
 	i = 0;
-	len = (int)ft_strlen(s);
-	while (i < len)
+	while (tab[i])
 	{
-		while ((int)s[i] == (int)c && s[i])
-			i++;
-		j = i;
-		while ((int)s[i] != (int)c && s[i])
-			i++;
-		if (j < i)
-			different_strs++;
+		free(tab[i]);
+		i++;
 	}
-	return (different_strs);
+	free(tab);
+	return (NULL);
 }
 
-static int	alloc_from_buffer(char *buffer, char **ptr, int index)
+static size_t	ft_nu_words(char const *s, char c)
 {
-	int	i;
+	size_t	i;
+	size_t	nu_words;
 
-	ptr[index] = (char *) malloc(sizeof(char)
-			* ft_strlen(buffer) + 1);
+	if (!s[0])
+		return (0);
 	i = 0;
-	if (!ptr[index])
+	nu_words = 0;
+	while (s[i] && s[i] == c)
+		i++;
+	while (s[i])
 	{
-		while (i < index)
-			free(ptr[i++]);
-		free(ptr);
-		return (1);
+		if (s[i] == c)
+		{
+			nu_words++;
+			while (s[i] && s[i] == c)
+				i++;
+			continue ;
+		}
+		i++;
 	}
-	ft_strlcpy(ptr[index], (const char *)buffer,
-		ft_strlen(buffer) + 1);
-	return (0);
+	if (s[i - 1] != c)
+		nu_words++;
+	return (nu_words);
 }
 
-static char	**get_strs(char const *s, char c, char **ptr)
+static void	ft_next_word(char **next_word, size_t *next_word_len, char c)
 {
-	int		substr_index;
-	char	buffer[256];
-	int		i;
-	int		j;
+	size_t	i;
 
-	substr_index = 0;
+	*next_word += *next_word_len;
+	*next_word_len = 0;
 	i = 0;
-	while (i < (int)ft_strlen(s))
+	while (**next_word && **next_word == c)
+		(*next_word)++;
+	while ((*next_word)[i])
 	{
-		j = 0;
-		while ((int)s[i] == (int)c && s[i])
-			i++;
-		if (!s[i])
-			break ;
-		while ((int)s[i] != c && s[i])
-			buffer[j++] = s[i++];
-		buffer[j] = '\0';
-		if (alloc_from_buffer(buffer, ptr, substr_index))
-			return (NULL);
-		substr_index++;
+		if ((*next_word)[i] == c)
+			return ;
+		(*next_word_len)++;
+		i++;
 	}
-	return (ptr);
 }
