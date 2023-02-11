@@ -1,12 +1,25 @@
 .PHONY = all clean fclean re
 
-CC := gg
+CC := gcc
 
-LINKERFLAG = -g -Wall -Wextra -Werror -D BUFFER_SIZE=42
+LINKERFLAG = -g -Wall -Wextra -Werror
+
+NAME = gnl.a
 
 SRCS := get_next_line.c \
 	get_next_line_utils.c
 
-BINS := $(SRCS:%.c=%)
+OBJS := $(SRCS:.c=.o)
 
-all:
+$(NAME): $(OBJS)
+	ar -ruv $(NAME) $(OBJS)
+
+all: $(NAME)
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
