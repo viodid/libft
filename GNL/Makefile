@@ -6,8 +6,9 @@ LINKERFLAG = -g -Wall -Wextra -Werror
 
 NAME = gnl.a
 
-SRCS := get_next_line.c \
-	get_next_line_utils.c
+SRCS := get_next_line_utils.c \
+	get_next_line.c \
+	test.c
 
 OBJS := $(SRCS:.c=.o)
 
@@ -15,6 +16,7 @@ $(NAME): $(OBJS)
 	ar -ruv $(NAME) $(OBJS)
 
 all: $(NAME)
+	$(CC) $(LINKERFLAG) -o test $(NAME)
 
 clean:
 	rm -f $(OBJS)

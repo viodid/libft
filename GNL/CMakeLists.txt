@@ -6,6 +6,8 @@ set(CMAKE_C_STANDARD 11)
 include_directories(.)
 
 add_executable(get_next_line
+        a
         get_next_line.c
+        test.c
         get_next_line.h
         get_next_line_utils.c)

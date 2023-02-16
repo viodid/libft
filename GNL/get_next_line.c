@@ -6,13 +6,13 @@
 /*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:53:22 by dyunta            #+#    #+#             */
-/*   Updated: 2023/02/11 03:53:14 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/02/15 22:01:45 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-char	*allocate_and_return_content(t_list *header, int fd);
-int	check_new_line(t_list *node);
+int		get_buffer_from_read(t_list *header, int fd);
+char	*get_line_output(t_list *node);
 
 /* Return one line from the text file pointed to by the file descriptor
  * 1. Read from fd and create a node with the content of the
@@ -24,50 +24,105 @@ int	check_new_line(t_list *node);
 
 char	*get_next_line(int fd)
 {
-	static t_list	*header;
+	static	t_list	*header;
+	char			*output;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
+	header = (t_list *)malloc(sizeof(t_list));
+	if (fd < 0 || BUFFER_SIZE < 1 || !header || read(fd, 0, 0) < 0)
 	{
 		free(header);
 		return (NULL);
 	}
-	return (allocate_and_return_content(header, fd));
+	header->content = "";
+	header->next = NULL;
+	if (!get_buffer_from_read(header, fd))
+	{
+		free_list(header);
+		return (NULL);
+	}
+	output = get_line_output(header);
+	if (!output)
+	{
+		free_list(header);
+		return (NULL);
+	}
+	//header = rearrange_content(header);
+	return (output);
 }
 
-char	*allocate_and_return_content(t_list *header, int fd)
+int	get_buffer_from_read(t_list *header, int fd)
 {
 	char	*buffer;
-	char	*output;
 	size_t	bytes;
 
 	buffer = (char *) malloc(sizeof(void) * BUFFER_SIZE + 1);
 	if (!buffer)
-		return (NULL);
-	bytes = read(fd, buffer, BUFFER_SIZE);
-	while (!check_new_line(header) || bytes != 0)
+		return (0);
+	while (!content_list_len(header))
 	{
+		bytes = read(fd, buffer, BUFFER_SIZE);
+		if (bytes == 0)
+			break ;
+		buffer[bytes] = '\0';
+
 		if (!append_node(header, create_node(buffer)))
 		{
 			free(buffer);
-			return (NULL);
+			return (0);
 		}
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		buffer[bytes] = '\0';
 	}
-	output = get_line_from_struct(header);
-	rearrange_content(header);
-	free_list(header);
 	free(buffer);
-	return (output);
+	return (1);
 }
 
-int	check_new_line(t_list *node)
+char	*get_line_output(t_list *node)
 {
+	char	*output;
+	char	*start_output;
+	size_t	i;
+
+	output = (char *) malloc(sizeof(char) * content_list_len(node));
+	if (!output)
+		return (NULL);
+	start_output = output;
+	i = 0;
 	while (node)
 	{
-		if (ft_strchr(node->content, '\n'))
-			return (1);
+		while ((node->content)[i])
+		{
+			if ((node->content)[i] == '\n')
+			{
+				*output = '\0';
+				break ;
+			}
+			*output = (node->content)[i];
+			i++;
+			output++;
+		}
 		node = node->next;
 	}
-	return (0);
+	return (start_output);
 }
+
+/*
+t_list	*rearrange_content(t_list *header)
+{
+	t_list	*new_header;
+	t_list	*node;
+
+	new_header = (t_list *) malloc(sizeof(t_list));
+	if (!new_header)
+	{
+		free_list(header);
+		return (NULL);
+	}
+	node = header;
+	while (node)
+	{
+		while ((node->content)[i] != '\n')
+			i++;
+	}
+	free_list(header);
+	return (new_header);
+}
+*/
