@@ -1,13 +1,12 @@
-cmake_minimum_required(VERSION 3.20)
-project(get_next_line C)
+cmake_minimum_required(VERSION 3.0)
 
-set(CMAKE_C_STANDARD 11)
+project(GNL)
+
+set(CMAKE_CXX_STANDARD 11)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -D BUFFER_SIZE=4")
 
 include_directories(.)
 
-add_executable(get_next_line
-        a
-        get_next_line.c
-        test.c
-        get_next_line.h
-        get_next_line_utils.c)
+
+add_executable(GNL test.c get_next_line.c get_next_line.h get_next_line_utils.c test1.txt)

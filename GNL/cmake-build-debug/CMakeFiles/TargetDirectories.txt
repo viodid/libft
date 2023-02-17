@@ -1,3 +1,3 @@
-/Users/dyunta/Documents/cursus/get_next_line/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/dyunta/Documents/cursus/get_next_line/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/dyunta/Documents/cursus/get_next_line/cmake-build-debug/CMakeFiles/get_next_line.dir
+/home/viodid/Documents/42-cursus/GNL/cmake-build-debug/CMakeFiles/GNL.dir
+/home/viodid/Documents/42-cursus/GNL/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/viodid/Documents/42-cursus/GNL/cmake-build-debug/CMakeFiles/rebuild_cache.dir

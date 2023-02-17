@@ -33,16 +33,19 @@ size_t	content_list_len(t_list *node)
 	return (0);
 }
 
-// TODO
-// Allocate and assign buffer to content
+/* Allocate new node then allocate and copy content to content node. */
 t_list	*create_node(char *content)
 {
 	t_list	*node;
+	char	*buffer;
 
 	node = (t_list *) malloc(sizeof(t_list));
-	if (!node)
+	buffer = (char *) malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!node || !buffer)
 		return (NULL);
-	node->content = content;
+	while (*content)
+		*buffer++ = *content++;
+	node->content = buffer - BUFFER_SIZE;
 	node->next = NULL;
 	return (node);
 }
