@@ -12,15 +12,17 @@
 
 #include "get_next_line.h"
 
+// TODO
+// handle EOF (empty file) to return len
 size_t	content_list_len(t_list *node)
 {
 	size_t	len;
 	size_t	i;
 
 	len = 0;
-	i = 0;
 	while (node)
 	{
+		i = 0;
 		while ((node->content)[i])
 		{
 			if ((node->content)[i] == '\n')
@@ -33,27 +35,20 @@ size_t	content_list_len(t_list *node)
 	return (0);
 }
 
-/* Allocate new node then allocate and copy content to content node. */
-t_list	*create_node(char *content)
+int	create_and_append_node(char *content, t_list *header)
 {
 	t_list	*node;
-	char	*buffer;
 
+	if (!content || !header)
+		return (0);
 	node = (t_list *) malloc(sizeof(t_list));
-	buffer = (char *) malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!node || !buffer)
-		return (NULL);
-	while (*content)
-		*buffer++ = *content++;
-	node->content = buffer - BUFFER_SIZE;
-	node->next = NULL;
-	return (node);
-}
-
-int	append_node(t_list *header, t_list *node)
-{
 	if (!node)
 		return (0);
+	node->content = ft_strdup((const char*)content);
+	if (!node->content)
+		return (0);
+	node->next = NULL;
+
 	while (header->next)
 		header = header->next;
 	header->next = node;
@@ -65,6 +60,27 @@ void	free_list(t_list *node)
 	if (!node)
 		return ;
 	free_list(node->next);
-	free(node->content);
+    if (*(node->content))
+        free(node->content);
 	free(node);
+}
+
+char	*ft_strdup(const char *str)
+{
+	int		len;
+	int 	i;
+	char	*ptr;
+	char	*start_ptr;
+
+	len = 0;
+	while (str[len])
+		len++;
+	ptr = (char *)malloc(len + 1);
+	if (!ptr)
+		return (NULL);
+	start_ptr = ptr;
+	while (*str)
+		*ptr++ = *(char *)str++;
+	*ptr = '\0';
+	return (start_ptr);
 }

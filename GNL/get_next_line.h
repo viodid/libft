@@ -13,7 +13,7 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 100
 # endif
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,8 +28,8 @@ typedef struct s_list
 
 char	*get_next_line(int fd);
 size_t	content_list_len(t_list *node);
-t_list	*create_node(char *content);
-int	append_node(t_list *header, t_list *node);
+int		create_and_append_node(char *content, t_list *header);
+char	*ft_strdup(const char *str);
 void	free_list(t_list *node);
 
 #endif
