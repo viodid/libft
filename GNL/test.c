@@ -15,6 +15,6 @@ int main(void)
 	printf("%s\n", get_next_line(fd));
 	printf("%s\n", get_next_line(fd));
 	close(fd);
-	system("leaks a.out");
+	system("leaks GNL");
 	return (0);
 }

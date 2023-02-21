@@ -6,7 +6,7 @@
 /*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:53:22 by dyunta            #+#    #+#             */
-/*   Updated: 2023/02/19 20:04:06 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/02/21 15:40:30 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -34,8 +34,12 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	// TODO: check if this is necessary, work around for static list
-	//header->content = "";
-	//header->next = NULL;
+	if (!header)
+	{
+		header = (t_list *) malloc(sizeof(t_list));
+		header->content = "";
+		header->next = NULL;
+	}
 	if (!get_buffer_from_read(header, fd))
 	{
 		free_list(header);
@@ -84,7 +88,7 @@ static char	*get_line_output(t_list *node)
 	char	*start_output;
 	size_t	i;
 
-	output = (char *) malloc(sizeof(char) * list_len_check_nl(node, 0) + 0);
+	output = (char *) malloc(sizeof(char) * list_len_check_nl(node, 0) + 1);
 	if (!output || !node->next)
 		return (NULL);
 	start_output = output;
@@ -95,15 +99,14 @@ static char	*get_line_output(t_list *node)
 		{
 			if ((node->content)[i] == '\n')
 			{
-				*output = '\0';
+				output++;
 				break ;
 			}
-			*output = (node->content)[i];
-			i++;
-			output++;
+			*output++ = (node->content)[i++];
 		}
 		node = node->next;
 	}
+	*output = '\0';
 	return (start_output);
 }
 
@@ -112,10 +115,8 @@ static t_list	*rearrange_content(t_list *header)
 	t_list	*node;
 	size_t	i;
 	t_list	*new_header;
-	int		break_flag;
 
 	node = header;
-	break_flag = 0;
 	while (node)
 	{
 		i = 0;
@@ -132,6 +133,7 @@ endloop:
 		return (NULL);
 	if (node && node->content[i])
 		new_header->content = ft_strdup(node->content + i);
+	new_header->next = NULL;
 	free_list(header);
 	return (new_header);
 }
