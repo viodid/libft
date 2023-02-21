@@ -6,7 +6,7 @@
 /*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:53:22 by dyunta            #+#    #+#             */
-/*   Updated: 2023/02/15 22:01:45 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/02/19 20:04:06 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -28,14 +28,14 @@ char	*get_next_line(int fd)
 	static	t_list	*header;
 	char			*output;
 
-	header = (t_list *)malloc(sizeof(t_list));
-	if (fd < 0 || BUFFER_SIZE < 1 || !header || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
 	{
 		free(header);
 		return (NULL);
 	}
-	header->content = "";
-	header->next = NULL;
+	// TODO: check if this is necessary, work around for static list
+	//header->content = "";
+	//header->next = NULL;
 	if (!get_buffer_from_read(header, fd))
 	{
 		free_list(header);
@@ -47,7 +47,7 @@ char	*get_next_line(int fd)
 		free_list(header);
 		return (NULL);
 	}
-	//header = rearrange_content(header);
+	header = rearrange_content(header);
 	return (output);
 }
 
@@ -60,7 +60,7 @@ static int	get_buffer_from_read(t_list *header, int fd)
 	buffer = (char *) malloc(sizeof(void) * BUFFER_SIZE + 1);
 	if (!buffer)
 		return (0);
-	while (!content_list_len(header))
+	while (!list_len_check_nl(header, 1))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes == 0)
@@ -84,8 +84,8 @@ static char	*get_line_output(t_list *node)
 	char	*start_output;
 	size_t	i;
 
-	output = (char *) malloc(sizeof(char) * content_list_len(node) + 1);
-	if (!output || !*(node->content))
+	output = (char *) malloc(sizeof(char) * list_len_check_nl(node, 0) + 0);
+	if (!output || !node->next)
 		return (NULL);
 	start_output = output;
 	while (node)
@@ -107,25 +107,31 @@ static char	*get_line_output(t_list *node)
 	return (start_output);
 }
 
-/*
 static t_list	*rearrange_content(t_list *header)
 {
 	t_list	*node;
 	size_t	i;
-	char	*new_content;
+	t_list	*new_header;
+	int		break_flag;
 
 	node = header;
+	break_flag = 0;
 	while (node)
 	{
 		i = 0;
-		while ((node->content)[i] && (node->content)[i] != '\n')
-			i++;
+		while ((node->content)[i])
+		{
+			if ((node->content)[i++] == '\n')
+				goto endloop;
+		}
 		node = node->next;
 	}
-	if (node->content[i] == '\n')
-	{
-	}
+endloop:
+	new_header = (t_list *)malloc(sizeof(t_list));
+	if (!new_header)
+		return (NULL);
+	if (node && node->content[i])
+		new_header->content = ft_strdup(node->content + i);
 	free_list(header);
 	return (new_header);
 }
-*/

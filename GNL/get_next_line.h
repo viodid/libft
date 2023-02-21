@@ -6,7 +6,7 @@
 /*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 20:20:10 by dyunta            #+#    #+#             */
-/*   Updated: 2023/02/11 03:28:35 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/02/19 18:14:15 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_list
 }	t_list;
 
 char	*get_next_line(int fd);
-size_t	content_list_len(t_list *node);
+size_t	list_len_check_nl(t_list *node, int check);
 int		create_and_append_node(char *content, t_list *header);
 char	*ft_strdup(const char *str);
 void	free_list(t_list *node);

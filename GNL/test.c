@@ -8,7 +8,7 @@ int main(void)
 {
 	int fd;
 
-	fd = open("/home/viodid/Documents/42-cursus/GNL/test2.txt", O_RDONLY);
+	fd = open("/Users/dyunta/Documents/42_github_repo/GNL/test1.txt", O_RDONLY);
 
 	printf("BUFFER_SIZE:%i - fd:%i\n", BUFFER_SIZE, fd);
 

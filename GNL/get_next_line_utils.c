@@ -6,15 +6,13 @@
 /*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:53:31 by dyunta            #+#    #+#             */
-/*   Updated: 2023/02/15 20:22:04 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/02/19 19:19:43 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// TODO
-// handle EOF (empty file) to return len
-size_t	content_list_len(t_list *node)
+size_t	list_len_check_nl(t_list *node, int check)
 {
 	size_t	len;
 	size_t	i;
@@ -32,19 +30,21 @@ size_t	content_list_len(t_list *node)
 		}
 		node = node->next;
 	}
+	if (!check)
+		return (len);
 	return (0);
 }
 
-int	create_and_append_node(char *content, t_list *header)
+int	create_and_append_node(char *buffer, t_list *header)
 {
 	t_list	*node;
 
-	if (!content || !header)
+	if (!buffer || !header)
 		return (0);
 	node = (t_list *) malloc(sizeof(t_list));
 	if (!node)
 		return (0);
-	node->content = ft_strdup((const char*)content);
+	node->content = ft_strdup((const char*)buffer);
 	if (!node->content)
 		return (0);
 	node->next = NULL;
@@ -60,8 +60,8 @@ void	free_list(t_list *node)
 	if (!node)
 		return ;
 	free_list(node->next);
-    if (*(node->content))
-        free(node->content);
+	if (*(node->content))
+		free(node->content);
 	free(node);
 }
 
