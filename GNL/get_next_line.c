@@ -90,9 +90,6 @@ static char	*get_line_output(t_list *node)
 	size_t	i;
 
 	output = (char *) malloc(sizeof(char) * list_len_check_nl(node, 0) + 1);
-    // TODO
-    // Only one node but with several lines
-    // Not \n in content's node
 	if (!output)
 		return (NULL);
 	start_output = output;
@@ -102,15 +99,17 @@ static char	*get_line_output(t_list *node)
 		while ((node->content)[i])
 		{
 			if ((node->content)[i] == '\n')
-			{
-				output++;
 				break ;
-			}
 			*output++ = (node->content)[i++];
 		}
 		node = node->next;
 	}
-	*output = '\0';
+    *output = '\0';
+    if (!*start_output)
+    {
+        free(start_output);
+        return (NULL);
+    }
 	return (start_output);
 }
 
