@@ -33,7 +33,6 @@ char	*get_next_line(int fd)
 		free(header);
 		return (NULL);
 	}
-	// TODO: check if this is necessary, work around for static list
 	if (!header)
 	{
 		header = (t_list *) malloc(sizeof(t_list));
@@ -125,8 +124,12 @@ static t_list	*rearrange_content(t_list *header)
 		i = 0;
 		while ((node->content)[i])
 		{
-			if ((node->content)[i++] == '\n')
-				goto endloop;
+            if ((node->content)[i++] == '\n')
+            {
+                while ((node->content)[i] == '\n')
+                    i++;
+                goto endloop;
+            }
 		}
 		node = node->next;
 	}
