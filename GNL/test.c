@@ -4,11 +4,13 @@
 
 #include "get_next_line.h"
 
-int main(void)
+int main(int argc, char **argv)
 {
 	int fd;
 
-	fd = open("/Users/dyunta/Documents/42_github_repo/GNL/test1.txt", O_RDONLY);
+    printf("%s - %i\n", argv[1], argc);
+
+	fd = open("/home/viodid/Documents/42-cursus/GNL/test4.txt", O_RDONLY);
 
 	printf("BUFFER_SIZE:%i - fd:%i\n", BUFFER_SIZE, fd);
 

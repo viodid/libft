@@ -64,6 +64,7 @@ static int	get_buffer_from_read(t_list *header, int fd)
 	buffer = (char *) malloc(sizeof(void) * BUFFER_SIZE + 1);
 	if (!buffer)
 		return (0);
+    // TODO: not new line, but EOF
 	while (!list_len_check_nl(header, 1))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
@@ -89,7 +90,10 @@ static char	*get_line_output(t_list *node)
 	size_t	i;
 
 	output = (char *) malloc(sizeof(char) * list_len_check_nl(node, 0) + 1);
-	if (!output || !node->next)
+    // TODO
+    // Only one node but with several lines
+    // Not \n in content's node
+	if (!output)
 		return (NULL);
 	start_output = output;
 	while (node)
@@ -128,11 +132,15 @@ static t_list	*rearrange_content(t_list *header)
 		node = node->next;
 	}
 endloop:
+    if (!node || !*(node->content + i))
+    {
+        free_list(header);
+        return (NULL);
+    }
 	new_header = (t_list *)malloc(sizeof(t_list));
 	if (!new_header)
 		return (NULL);
-	if (node && node->content[i])
-		new_header->content = ft_strdup(node->content + i);
+    new_header->content = ft_strdup(node->content + i);
 	new_header->next = NULL;
 	free_list(header);
 	return (new_header);
