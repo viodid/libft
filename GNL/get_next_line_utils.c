@@ -72,7 +72,7 @@ char	*ft_strdup(const char *str)
 	char	*start_ptr;
 
 	len = 0;
-	while (str[len])
+	while (*str && str[len])
 		len++;
 	ptr = (char *)malloc(len + 1);
 	if (!ptr)

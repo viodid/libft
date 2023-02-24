@@ -45,11 +45,6 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	output = get_line_output(header);
-	if (!output)
-	{
-		free_list(header);
-		return (NULL);
-	}
 	header = rearrange_content(header);
 	return (output);
 }
@@ -104,11 +99,6 @@ static char	*get_line_output(t_list *node)
 		node = node->next;
 	}
     *output = '\0';
-    if (!*start_output)
-    {
-        free(start_output);
-        return (NULL);
-    }
 	return (start_output);
 }
 
@@ -134,16 +124,13 @@ static t_list	*rearrange_content(t_list *header)
 		node = node->next;
 	}
 endloop:
-    if (!node || !*(node->content + i))
-    {
-        free_list(header);
-        return (NULL);
-    }
 	new_header = (t_list *)malloc(sizeof(t_list));
 	if (!new_header)
 		return (NULL);
-    new_header->content = ft_strdup(node->content + i);
-	new_header->next = NULL;
+    if (!node || !*(node->content + i))
+        new_header->content = "";
+    else
+        new_header->content = ft_strdup(node->content + i);
 	free_list(header);
 	return (new_header);
 }
