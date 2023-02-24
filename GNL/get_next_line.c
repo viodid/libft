@@ -58,7 +58,6 @@ static int	get_buffer_from_read(t_list *header, int fd)
 	buffer = (char *) malloc(sizeof(void) * BUFFER_SIZE + 1);
 	if (!buffer)
 		return (0);
-    // TODO: not new line, but EOF
 	while (!list_len_check_nl(header, 1))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
@@ -83,6 +82,8 @@ static char	*get_line_output(t_list *node)
 	char	*start_output;
 	size_t	i;
 
+    if (!*(node->content) && !node->next)
+        return (NULL);
 	output = (char *) malloc(sizeof(char) * list_len_check_nl(node, 0) + 1);
 	if (!output)
 		return (NULL);

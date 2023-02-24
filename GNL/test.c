@@ -10,7 +10,7 @@ int main()
 	fd = open("/home/viodid/Documents/42-cursus/GNL/test1.txt", O_RDONLY);
 
     char *output = get_next_line(fd);
-    while (*output)
+    while (output)
     {
         printf("%s\n", output);
         free(output);
