@@ -127,11 +127,17 @@ static t_list	*rearrange_content(t_list *header)
 endloop:
 	new_header = (t_list *)malloc(sizeof(t_list));
 	if (!new_header)
-		return (NULL);
+    {
+        free_list(header);
+        return (NULL);
+    }
     if (!node || !*(node->content + i))
-        new_header->content = "";
-    else
-        new_header->content = ft_strdup(node->content + i);
+    {
+        free(new_header);
+        free_list(header);
+        return (NULL);
+    }
+    new_header->content = ft_strdup(node->content + i);
 	free_list(header);
 	return (new_header);
 }
