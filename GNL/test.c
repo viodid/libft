@@ -9,8 +9,6 @@ int main()
 	int fd;
 	fd = open("/home/viodid/Documents/42-cursus/GNL/test1.txt", O_RDONLY);
 
-	printf("BUFFER_SIZE:%i - fd:%i\n", BUFFER_SIZE, fd);
-
     char *output = get_next_line(fd);
     while (output)
     {

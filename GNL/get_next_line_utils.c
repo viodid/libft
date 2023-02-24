@@ -68,7 +68,6 @@ void	free_list(t_list *node)
 char	*ft_strdup(const char *str)
 {
 	int		len;
-	int 	i;
 	char	*ptr;
 	char	*start_ptr;
 
