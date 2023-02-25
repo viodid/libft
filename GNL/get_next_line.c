@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-static int	get_buffer_from_read(t_list *header, int fd);
-static char	*get_line_output(t_list *node);
+static int		get_buffer_from_read(t_list *header, int fd);
+static char		*get_line_output(t_list *node);
 static t_list	*rearrange_content(t_list *header);
 
 /* Return one line from the text file pointed to by the file descriptor
@@ -25,7 +25,7 @@ static t_list	*rearrange_content(t_list *header);
 
 char	*get_next_line(int fd)
 {
-	static	t_list	*header;
+	static t_list	*header;
 	char			*output;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
@@ -64,7 +64,6 @@ static int	get_buffer_from_read(t_list *header, int fd)
 		if (bytes == 0)
 			break ;
 		buffer[bytes] = '\0';
-
 		if (!create_and_append_node(buffer, header))
 		{
 			free(buffer);
@@ -75,15 +74,16 @@ static int	get_buffer_from_read(t_list *header, int fd)
 	return (1);
 }
 
-// O(n*c) where n is the number of nodes in the list and c is the total number of chars in each node
+/* O(n*c) where n is the number of nodes in the list and c
+ * is the total number of chars in each node */
 static char	*get_line_output(t_list *node)
 {
 	char	*output;
 	char	*start_output;
 	size_t	i;
 
-    if (!*(node->content) && !node->next)
-        return (NULL);
+	if (!*(node->content) && !node->next)
+		return (NULL);
 	output = (char *) malloc(sizeof(char) * list_len_check_nl(node, 0) + 1);
 	if (!output)
 		return (NULL);
@@ -93,13 +93,13 @@ static char	*get_line_output(t_list *node)
 		i = 0;
 		while ((node->content)[i])
 		{
-            *output++ = (node->content)[i];
+			*output++ = (node->content)[i];
 			if ((node->content)[i++] == '\n')
 				break ;
 		}
 		node = node->next;
 	}
-    *output = '\0';
+	*output = '\0';
 	return (start_output);
 }
 
@@ -109,34 +109,28 @@ static t_list	*rearrange_content(t_list *header)
 	size_t	i;
 	t_list	*new_header;
 
-    new_header = NULL;
+	new_header = NULL;
 	node = header;
 	while (node)
 	{
 		i = 0;
 		while ((node->content)[i])
 		{
-            if ((node->content)[i++] == '\n')
-                goto endloop;
+			if ((node->content)[i++] == '\n')
+				break
 		}
 		node = node->next;
 	}
-endloop:
 	new_header = (t_list *)malloc(sizeof(t_list));
-    new_header->next = NULL;
-    new_header->content = NULL;
-	if (!new_header)
-    {
-        free_list(header);
-        return (NULL);
-    }
-    if (!node || !*(node->content + i))
-    {
-        free(new_header);
-        free_list(header);
-        return (NULL);
-    }
-    new_header->content = ft_strdup(node->content + i);
+	new_header->next = NULL;
+	new_header->content = NULL;
+	if (!new_header || !node || !*(node->content + i))
+	{
+		free(new_header);
+		free_list(header);
+		return (NULL);
+	}
+	new_header->content = ft_strdup(node->content + i);
 	free_list(header);
 	return (new_header);
 }

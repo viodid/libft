@@ -23,7 +23,7 @@ size_t	list_len_check_nl(t_list *node, int check)
 		i = 0;
 		while ((node->content)[i])
 		{
-            len++;
+			len++;
 			if ((node->content)[i++] == '\n')
 				return (len);
 		}
@@ -43,11 +43,10 @@ int	create_and_append_node(char *buffer, t_list *header)
 	node = (t_list *) malloc(sizeof(t_list));
 	if (!node)
 		return (0);
-	node->content = ft_strdup((const char*)buffer);
+	node->content = ft_strdup((const char *)buffer);
 	if (!node->content)
 		return (0);
 	node->next = NULL;
-
 	while (header->next)
 		header = header->next;
 	header->next = node;
