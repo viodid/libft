@@ -10,6 +10,8 @@ int main()
 	fd = open("/home/viodid/Documents/42-cursus/GNL/test1.txt", O_RDONLY);
 
     char *output = get_next_line(fd);
+    printf("%s\n", output);
+    free(output);
     //printf("%s\n", output);
     output = get_next_line(fd);
     //printf("%s\n", output);
@@ -23,6 +25,6 @@ int main()
     */
 	close(fd);
     free(output);
-	system("leaks GNL");
+	//system("leaks GNL");
 	return (0);
 }

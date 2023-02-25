@@ -23,10 +23,9 @@ size_t	list_len_check_nl(t_list *node, int check)
 		i = 0;
 		while ((node->content)[i])
 		{
-			if ((node->content)[i] == '\n')
+            len++;
+			if ((node->content)[i++] == '\n')
 				return (len);
-			len++;
-			i++;
 		}
 		node = node->next;
 	}

@@ -93,9 +93,9 @@ static char	*get_line_output(t_list *node)
 		i = 0;
 		while ((node->content)[i])
 		{
-			if ((node->content)[i] == '\n')
+            *output++ = (node->content)[i];
+			if ((node->content)[i++] == '\n')
 				break ;
-			*output++ = (node->content)[i++];
 		}
 		node = node->next;
 	}
@@ -116,11 +116,7 @@ static t_list	*rearrange_content(t_list *header)
 		while ((node->content)[i])
 		{
             if ((node->content)[i++] == '\n')
-            {
-                while ((node->content)[i] == '\n')
-                    i++;
                 goto endloop;
-            }
 		}
 		node = node->next;
 	}
