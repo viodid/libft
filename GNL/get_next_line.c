@@ -117,14 +117,20 @@ static t_list	*rearrange_content(t_list *header)
 		while ((node->content)[i])
 		{
 			if ((node->content)[i++] == '\n')
-				break ;
+				goto endloop;
 		}
 		node = node->next;
 	}
+endloop:
 	new_header = (t_list *)malloc(sizeof(t_list));
 	new_header->next = NULL;
 	new_header->content = NULL;
-	if (!new_header || !node || !*(node->content + i))
+	if (!new_header)
+	{
+		free_list(header);
+		return (NULL);
+	}
+	if (!node || !*(node->content + i))
 	{
 		free(new_header);
 		free_list(header);
