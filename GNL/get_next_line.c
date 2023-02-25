@@ -117,7 +117,7 @@ static t_list	*rearrange_content(t_list *header)
 		while ((node->content)[i])
 		{
 			if ((node->content)[i++] == '\n')
-				break
+				break ;
 		}
 		node = node->next;
 	}
