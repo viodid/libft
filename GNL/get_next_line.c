@@ -108,6 +108,7 @@ static t_list	*rearrange_content(t_list *header)
 	t_list	*node;
 	size_t	i;
 	t_list	*new_header;
+	t_list *temp;
 
 	new_header = NULL;
 	node = header;
@@ -117,7 +118,10 @@ static t_list	*rearrange_content(t_list *header)
 		while ((node->content)[i])
 		{
 			if ((node->content)[i++] == '\n')
+			{
+				temp = node;
 				break ;
+			}
 		}
 		node = node->next;
 	}
@@ -129,7 +133,7 @@ static t_list	*rearrange_content(t_list *header)
 	}
 	new_header->next = NULL;
 	new_header->content = NULL;
-	if (!node || !*(node->content + i))
+	if (!temp || !*(temp->content + i))
 	{
 		free(new_header);
 		free_list(header);
