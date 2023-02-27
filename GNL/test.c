@@ -13,7 +13,7 @@ int main()
     printf("%s", output);
     free(output);
 
-    output = get_next_line(fd);
+    output = get_next_line(4);
     printf("%s", output);
     free(output);
 

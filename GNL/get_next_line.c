@@ -61,6 +61,11 @@ static int	get_buffer_from_read(t_list *header, int fd)
 	while (!list_len_check_nl(header, 1))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
+		if (bytes == -1)
+		{
+			free(buffer);
+			return (0);
+		}
 		if (bytes == 0)
 			break ;
 		buffer[bytes] = '\0';
@@ -128,13 +133,13 @@ endloop:
 	}
 	new_header->next = NULL;
 	new_header->content = NULL;
-	if (!temp || !*(temp->content + i))
+	if (!node || !*(node->content + i))
 	{
 		free(new_header);
 		free_list(header);
 		return (NULL);
 	}
-	new_header->content = ft_strdup(temp->content + i);
+	new_header->content = ft_strdup(node->content + i);
 	free_list(header);
 	return (new_header);
 }
