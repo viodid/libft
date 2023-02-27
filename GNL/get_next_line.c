@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-static int		get_buffer_from_read(t_list *header, int fd);
+static int		get_buffer_create_list(t_list *header, int fd);
 static char		*get_line_output(t_list *node);
 static t_list	*rearrange_content(t_list *header);
 
@@ -39,7 +39,7 @@ char	*get_next_line(int fd)
 		header->content = "";
 		header->next = NULL;
 	}
-	if (!get_buffer_from_read(header, fd))
+	if (!get_buffer_create_list(header, fd))
 	{
 		free_list(header);
 		return (NULL);
@@ -50,7 +50,7 @@ char	*get_next_line(int fd)
 }
 
 // O(n^2) where n is the number of nodes in the list
-static int	get_buffer_from_read(t_list *header, int fd)
+static int	get_buffer_create_list(t_list *header, int fd)
 {
 	char	*buffer;
 	size_t	bytes;
@@ -61,11 +61,6 @@ static int	get_buffer_from_read(t_list *header, int fd)
 	while (!list_len_check_nl(header, 1))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if ((int)bytes == -1)
-		{
-			free(buffer);
-			return (0);
-		}
 		if (bytes == 0)
 			break ;
 		buffer[bytes] = '\0';

@@ -17,6 +17,8 @@ size_t	list_len_check_nl(t_list *node, int check)
 	size_t	len;
 	size_t	i;
 
+	if (!node)
+		return (0);
 	len = 0;
 	while (node)
 	{
