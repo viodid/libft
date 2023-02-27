@@ -139,7 +139,7 @@ static t_list	*rearrange_content(t_list *header)
 		free_list(header);
 		return (NULL);
 	}
-	new_header->content = ft_strdup(node->content + i);
+	new_header->content = ft_strdup(temp->content + i);
 	free_list(header);
 	return (new_header);
 }
