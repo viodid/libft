@@ -108,7 +108,6 @@ static t_list	*rearrange_content(t_list *header)
 	t_list	*node;
 	size_t	i;
 	t_list	*new_header;
-	t_list *temp;
 
 	new_header = NULL;
 	node = header;
@@ -116,15 +115,11 @@ static t_list	*rearrange_content(t_list *header)
 	{
 		i = 0;
 		while ((node->content)[i])
-		{
 			if ((node->content)[i++] == '\n')
-			{
-				temp = node;
-				break ;
-			}
-		}
+				goto endloop;
 		node = node->next;
 	}
+endloop:
 	new_header = (t_list *)malloc(sizeof(t_list));
 	if (!new_header)
 	{
