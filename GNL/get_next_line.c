@@ -61,7 +61,7 @@ static int	get_buffer_from_read(t_list *header, int fd)
 	while (!list_len_check_nl(header, 1))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes == -1)
+		if ((int)bytes == -1)
 		{
 			free(buffer);
 			return (0);
