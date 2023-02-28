@@ -15,14 +15,15 @@ static t_list	*get_buffer_create_list(t_list *header, int fd);
 static char		*get_line_output(t_list *node);
 static t_list	*rearrange_content(t_list *header);
 
-/* Return one line from the text file pointed to by the file descriptor
+/* Return one line at a time from the text file pointed to by the file
+ * descriptor:
  * 1. Read from fd and create a node with the content of the
  * read's buffer and append it to the list.
  * 2. Check whether \n is in the current content, else loop through 1st step.
  * 3. Create a new list with the content of the remaining text after \n.
- * Free the list.
- * 4. Return the content of the desired output*/
-
+ * 4. Return the content of the desired output.
+ * Time complexity: O((n/b)^2) where n is the number of character until EOF
+ * or the first nl and b is the BUFFER_SIZE. */
 char	*get_next_line(int fd)
 {
 	static t_list	*header;
@@ -45,7 +46,8 @@ char	*get_next_line(int fd)
 	return (output);
 }
 
-// O(n^2) where n is the number of nodes in the list
+/* Create a new list with the content of the buffer read from fd.
+ * Return the new list. */
 static t_list	*get_buffer_create_list(t_list *header, int fd)
 {
 	char	*buffer;
@@ -71,8 +73,7 @@ static t_list	*get_buffer_create_list(t_list *header, int fd)
 	return (header);
 }
 
-/* O(n*c) where n is the number of nodes in the list and c
- * is the total number of chars in each node */
+/* Return the content of the list until the first \n or \0 character. */
 static char	*get_line_output(t_list *node)
 {
 	char	*output;
@@ -100,6 +101,8 @@ static char	*get_line_output(t_list *node)
 	return (start_output);
 }
 
+/* Reallocate and return the content of the list after the first nl character.
+ * Return NULL whether EOF or no reallocation needed.*/
 static t_list	*rearrange_content(t_list *header)
 {
 	t_list	*node;

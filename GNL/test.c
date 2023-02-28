@@ -17,6 +17,18 @@ int main()
     printf("%s", output);
     free(output);
 
+	output = get_next_line(fd);
+	printf("%s", output);
+	free(output);
+
+	output = get_next_line(fd);
+	printf("%s", output);
+	free(output);
+
+	output = get_next_line(fd);
+	printf("%s", output);
+	free(output);
+
     /*
     while (output)
     {

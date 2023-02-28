@@ -12,6 +12,8 @@
 
 #include "get_next_line.h"
 
+/* Return the length of the list, or the length of the list
+ * until the first \n character is found*/
 size_t	list_len_check_nl(t_list *node, int check)
 {
 	size_t	len;
@@ -36,6 +38,8 @@ size_t	list_len_check_nl(t_list *node, int check)
 	return (0);
 }
 
+/* Create a new node and append it to the end of the list.
+ * Return only the new node if no header is received*/
 t_list	*create_and_append_node(char *content, t_list *header)
 {
 	t_list	*node;
@@ -68,6 +72,8 @@ void	free_list(t_list *node)
 	free(node);
 }
 
+/* Receive a pointer to a str and return a new pointer to the same content
+ * if no content is received, return a new pointer to '\0'*/
 char	*ft_strdup(const char *str)
 {
 	int		len;
