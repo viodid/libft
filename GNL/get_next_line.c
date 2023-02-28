@@ -132,6 +132,12 @@ endloop:
 		return (NULL);
 	}
 	new_header->content = ft_strdup(node->content + i);
+	if (!new_header->content)
+	{
+		free(new_header);
+		free_list(header);
+		return (NULL);
+	}
 	free_list(header);
 	return (new_header);
 }
