@@ -112,16 +112,13 @@ static t_list	*rearrange_content(t_list *header)
 	{
 		i = 0;
 		while ((node->content)[i])
+		{
 			if ((node->content)[i++] == '\n' && *(node->content + i))
 			{
 				new_list = create_and_append_node(node->content + i, NULL);
-				if (!new_list)
-				{
-					free_list(header);
-					return (NULL);
-				}
 				break ;
 			}
+		}
 		node = node->next;
 	}
 	free_list(header);
