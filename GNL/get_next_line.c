@@ -61,7 +61,7 @@ static int	get_buffer_create_list(t_list *header, int fd)
 	while (!list_len_check_nl(header, 1))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes == 0)
+		if (bytes <= 0)
 			break ;
 		buffer[bytes] = '\0';
 		if (!create_and_append_node(buffer, header))
