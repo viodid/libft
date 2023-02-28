@@ -30,7 +30,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
 	{
-		free(header);
+		free_list(header);
 		header = NULL;
 		return (NULL);
 	}
@@ -132,12 +132,6 @@ endloop:
 		return (NULL);
 	}
 	new_header->content = ft_strdup(node->content + i);
-	if (!new_header->content)
-	{
-		free(new_header);
-		free_list(header);
-		return (NULL);
-	}
 	free_list(header);
 	return (new_header);
 }
