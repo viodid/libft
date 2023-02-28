@@ -134,7 +134,7 @@ endloop:
 		free_list(header);
 		return (NULL);
 	}
-	new_list = create_and_append_node(ft_strdup(node->content + i), NULL);
+	new_list = create_and_append_node(node->content + i, NULL);
 	free_list(header);
 	return (new_list);
 }
