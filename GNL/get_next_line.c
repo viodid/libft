@@ -31,6 +31,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
 	{
 		free(header);
+		header = NULL;
 		return (NULL);
 	}
 	header = get_buffer_create_list(header, fd);
