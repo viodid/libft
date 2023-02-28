@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-static int		get_buffer_create_list(t_list *header, int fd);
+static t_list	*get_buffer_create_list(t_list *header, int fd);
 static char		*get_line_output(t_list *node);
 static t_list	*rearrange_content(t_list *header);
 
@@ -33,13 +33,8 @@ char	*get_next_line(int fd)
 		free(header);
 		return (NULL);
 	}
+	header = get_buffer_create_list(header, fd);
 	if (!header)
-	{
-		header = (t_list *) malloc(sizeof(t_list));
-		header->content = "";
-		header->next = NULL;
-	}
-	if (!get_buffer_create_list(header, fd))
 	{
 		free_list(header);
 		return (NULL);
@@ -50,28 +45,29 @@ char	*get_next_line(int fd)
 }
 
 // O(n^2) where n is the number of nodes in the list
-static int	get_buffer_create_list(t_list *header, int fd)
+static t_list	*get_buffer_create_list(t_list *header, int fd)
 {
 	char	*buffer;
 	size_t	bytes;
 
 	buffer = (char *) malloc(sizeof(void) * BUFFER_SIZE + 1);
 	if (!buffer)
-		return (0);
+		return (NULL);
 	while (!list_len_check_nl(header, 1))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes <= 0)
 			break ;
 		buffer[bytes] = '\0';
-		if (!create_and_append_node(buffer, header))
+		header = create_and_append_node(buffer, header);
+		if (!header)
 		{
 			free(buffer);
-			return (0);
+			return (NULL);
 		}
 	}
 	free(buffer);
-	return (1);
+	return (header);
 }
 
 /* O(n*c) where n is the number of nodes in the list and c
@@ -82,7 +78,7 @@ static char	*get_line_output(t_list *node)
 	char	*start_output;
 	size_t	i;
 
-	if (!*(node->content) && !node->next)
+	if (!node)
 		return (NULL);
 	output = (char *) malloc(sizeof(char) * list_len_check_nl(node, 0) + 1);
 	if (!output)

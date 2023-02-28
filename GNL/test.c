@@ -7,13 +7,13 @@
 int main()
 {
 	int fd;
-	fd = open("/home/viodid/Documents/42-cursus/GNL/read_error.txt", O_RDONLY);
+	fd = open("/home/viodid/Documents/42-cursus/GNL/test1.txt", O_RDONLY);
 
     char *output = get_next_line(fd);
     printf("%s", output);
     free(output);
 
-    output = get_next_line(4);
+    output = get_next_line(fd);
     printf("%s", output);
     free(output);
 

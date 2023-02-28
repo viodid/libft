@@ -36,25 +36,28 @@ size_t	list_len_check_nl(t_list *node, int check)
 	return (0);
 }
 
-int	create_and_append_node(char *buffer, t_list *header)
+t_list	*create_and_append_node(char *buffer, t_list *header)
 {
 	t_list	*node;
 
-	if (!buffer || !header)
-		return (0);
+	if (!buffer)
+		return (NULL);
 	node = (t_list *) malloc(sizeof(t_list));
 	if (!node)
-		return (0);
+		return (NULL);
 	node->content = ft_strdup((const char *)buffer);
 	if (!node->content)
-		return (0);
+		return (NULL);
 	node->next = NULL;
+	if (!header)
+		return (node);
 	while (header->next)
 		header = header->next;
 	header->next = node;
-	return (1);
+	return (header);
 }
 
+/* Linked list error proof free function */
 void	free_list(t_list *node)
 {
 	if (!node)
