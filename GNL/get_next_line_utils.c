@@ -39,6 +39,7 @@ size_t	list_len_check_nl(t_list *node, int check)
 t_list	*create_and_append_node(char *buffer, t_list *header)
 {
 	t_list	*node;
+	t_list	*tmp;
 
 	if (!buffer)
 		return (NULL);
@@ -51,9 +52,10 @@ t_list	*create_and_append_node(char *buffer, t_list *header)
 	node->next = NULL;
 	if (!header)
 		return (node);
-	while (header->next)
-		header = header->next;
-	header->next = node;
+	tmp = header;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = node;
 	return (header);
 }
 
