@@ -36,19 +36,17 @@ size_t	list_len_check_nl(t_list *node, int check)
 	return (0);
 }
 
-t_list	*create_and_append_node(char *buffer, t_list *header)
+t_list	*create_and_append_node(char *content, t_list *header)
 {
 	t_list	*node;
 	t_list	*tmp;
 
-	if (!buffer)
+	if (!content)
 		return (NULL);
 	node = (t_list *) malloc(sizeof(t_list));
 	if (!node)
 		return (NULL);
-	node->content = ft_strdup((const char *)buffer);
-	if (!node->content)
-		return (NULL);
+	node->content = ft_strdup((const char *)content);
 	node->next = NULL;
 	if (!header)
 		return (node);
