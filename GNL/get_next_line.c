@@ -113,28 +113,20 @@ static t_list	*rearrange_content(t_list *header)
 		i = 0;
 		while ((node->content)[i])
 			if ((node->content)[i++] == '\n')
-				goto endloop;
+			{
+				/*
+				if (!node || !*(node->content + i))
+				{
+					free(new_list);
+					free_list(header);
+					return (NULL);
+				}
+				 */
+				new_list = create_and_append_node(node->content + i, NULL);
+				break ;
+			}
 		node = node->next;
 	}
-endloop:
-	/*
-	new_list = (t_list *)malloc(sizeof(t_list));
-	if (!new_list)
-	{
-		free_list(header);
-		return (NULL);
-	}
-	new_list->next = NULL;
-	new_list->content = NULL;
-	new_list->content = ft_strdup(node->content + i);
-	*/
-	if (!node || !*(node->content + i))
-	{
-		free(new_list);
-		free_list(header);
-		return (NULL);
-	}
-	new_list = create_and_append_node(node->content + i, NULL);
 	free_list(header);
 	return (new_list);
 }
