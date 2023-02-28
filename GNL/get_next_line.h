@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-#include <fcntl.h>
+# include <fcntl.h>
 
 typedef struct s_list
 {
@@ -28,7 +28,7 @@ typedef struct s_list
 
 char	*get_next_line(int fd);
 size_t	list_len_check_nl(t_list *node, int check);
-t_list 	*create_and_append_node(char *content, t_list *header);
+t_list	*create_and_append_node(char *content, t_list *header);
 char	*ft_strdup(const char *str);
 void	free_list(t_list *node);
 
