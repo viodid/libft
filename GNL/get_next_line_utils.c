@@ -76,6 +76,8 @@ char	*ft_strdup(const char *str)
 	char	*ptr;
 	char	*start_ptr;
 
+	if (!str)
+		return (NULL);
 	len = 0;
 	while (*str && str[len])
 		len++;
