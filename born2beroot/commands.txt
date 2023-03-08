@@ -1,0 +1,1 @@
+selinux -- Check if SELinux is already installed and enabled on your CentOS system
