@@ -1,1 +1,11 @@
-selinux -- Check if SELinux is already installed and enabled on your CentOS system
+1. sestatus -- Check if SELinux is already installed and enabled on your CentOS system
+
+SELinux provides mandatory access control to a Linux server, where every system
+call is denied unless it has been specifically allowed.
+
+
+2. Hardenning SSH Server
+- Disable login root
+- Disable password login
+- Disable default 22 port and listen on a non-default port
+
