@@ -1,8 +1,12 @@
-1. sestatus -- Check if SELinux is already installed and enabled on your CentOS system
+1. LVM - Logical Volumes Management
+Is a storage device management technology that gives users the power to pool and
+abstract the physical layout of component storage devices for flexible administration.
+
+2. sestatus -- Check if SELinux is already installed and enabled on your CentOS system
 SELinux provides mandatory access control to a Linux server, where every system
 call is denied unless it has been specifically allowed.
 
-2. Managing users
+3. Managing users
 useradd -- default command for create or update users.
 sudo useradd -m -s /bin/bash -u 1001 -g users -G sudo,adm -c "John Doe" john
 -m: create home directory.
@@ -10,8 +14,6 @@ sudo useradd -m -s /bin/bash -u 1001 -g users -G sudo,adm -c "John Doe" john
 -u , -g: numerical user and goup ID respectively.
 -G: groups the user will belong to.
 -c: comment or description.
-
-
 
 X. Hardenning SSH Server
 - Disable login root

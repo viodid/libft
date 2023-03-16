@@ -1,5 +1,3 @@
-hola gordita,
-te quiero mucho.
-Soy tu amigo,
-el gato.
-¿Qué tal?
+line1
+line2
+line3
