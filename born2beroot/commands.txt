@@ -24,7 +24,7 @@ passwd -n 30 -w 3 -x 90 <user>
 -w: days warning user before expiry
 -x: time in days till expiration
 usermod -> modifies the system account files.
-usermod -aG <username>
+usermod -aG <group> <username>
 -a: append the user to the group
 -G: with -a, appends the user to the goup list, delete the user otherwise.
 
