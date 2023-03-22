@@ -50,11 +50,12 @@ echo -e "Setting up enviroment\n${Cyan}Please enter you username (login)...${Whi
 read username
 
 # Set the hostname
-echo $username > /etc/hostname
+echo "${username}42" > /etc/hostname
+echo -e "127.0.0.1\t"${username}42"" > /etc/hosts
 
 
 # Update the hosts file with the new hostname
-sed -i "s/127.0.0.1*/127.0.0.1\t$username/" /etc/hosts
+# sed -i "s/127.0.0.1*/127.0.0.1\t"${username}42"/" /etc/hosts
 
 
 
