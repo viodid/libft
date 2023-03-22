@@ -16,11 +16,23 @@ Purple='\033[0;35m'       # Purple
 Cyan='\033[0;36m'         # Cyan
 White='\033[0;37m'        # White
 
+# Intro ascii art
+echo -en "${Purple}
+██████╗░░█████╗░██████╗░███╗░░██╗██████╗░██████╗░███████╗██████╗░░█████╗░░█████╗░████████╗
+██╔══██╗██╔══██╗██╔══██╗████╗░██║╚════██╗██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝
+██████╦╝██║░░██║██████╔╝██╔██╗██║░░███╔═╝██████╦╝█████╗░░██████╔╝██║░░██║██║░░██║░░░██║░░░
+██╔══██╗██║░░██║██╔══██╗██║╚████║██╔══╝░░██╔══██╗██╔══╝░░██╔══██╗██║░░██║██║░░██║░░░██║░░░
+██████╦╝╚█████╔╝██║░░██║██║░╚███║███████╗██████╦╝███████╗██║░░██║╚█████╔╝╚█████╔╝░░░██║░░░
+╚═════╝░░╚════╝░╚═╝░░╚═╝╚═╝░░╚══╝╚══════╝╚═════╝░╚══════╝╚═╝░░╚═╝░╚════╝░░╚════╝░░░░╚═╝░░░
+"
+# Disclaimer
+echo -en "${Green}\nBe aware that the script must be executed with root privileges, otherwise the script will fail.\nIf you don't know how to login as a root, try: ${Yellow}sudo su -\n"
+
 # Let the user write which linux distro is the script running on
 
 # Linux distro election; 1 for Debian, 2 for CentOs
 while true; do
-	echo -e "${Cyan}What distro have you chose?\n${White}1. Debian\n2. CentOs"
+	echo -e "\n${Cyan}What distro have you chose?\n${White}1. Debian\n2. CentOs"
 	read distro 
 	if [[ $distro == 1 ]]; then
 		echo "You selected Debian!"
@@ -34,8 +46,15 @@ while true; do
 done
 
 
-echo -e "Setting up enviroment\nChanging hostname..."
+echo -e "Setting up enviroment\n${Cyan}Please enter you username (login)...${White}"
+read username
 
+# Set the hostname
+echo $username > /etc/hostname
+
+
+# Update the hosts file with the new hostname
+sed -i "s/127.0.0.1*/127.0.0.1\t$username/" /etc/hosts
 
 
 
