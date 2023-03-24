@@ -69,8 +69,14 @@ echo "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepea
 
 echo -en "${Green}Done!${White}"
 
+# Create group "user42"
+echo -n "Creating user42 group..."
+groupadd user42
+
+# Create user
+echo -n "Creating user..."
+useradd -m -s /bin/bash -g user42 -c "User automatically created with the bor2beroot script" $username
 
 
-#sudo useradd -m -s $SHELL -g wheel -c "User created with bor2beroot script" $USERNAME
 
 exit 0
