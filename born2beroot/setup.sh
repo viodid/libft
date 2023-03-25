@@ -8,6 +8,15 @@
 # expample
 # echo -e "I ${Red}love${Yellow} Stack Overflow"
 #
+funtion check_success_package_install
+{
+	if [[ $? == 0 ]]; then
+		echo -e "${Green}$1 installed successfully.${White}"
+		return 0
+	echo -e "${Red}$1 installation failed.${White}"
+	return 1
+}
+
 # Install packages
 function distro_check_and_install {
 	if [[ $distro == 1 ]]; then
@@ -22,6 +31,7 @@ function distro_check_and_install {
 			echo -e "${Cyan}Installing $1...${White}"
 			apt install $1 -y > /dev/null
 			sleep 1
+			check_success_package_install $1
 	fi
 	elif [[ $distro == 2 ]]; then
 		# CentOs
@@ -41,12 +51,15 @@ function distro_check_and_install {
 				echo -e "${Cyan}Installing $1 through snap...${White}"
 				sleep 1
 				dnf install snapd
+				check_success_package_install snapd
 				sleep 1
 				snap install $1
+				check_success_package_install $1
 			fi
 		fi
 	fi
 }
+
 
 Black='\033[0;30m'        # Black
 Red='\033[0;31m'          # Red
