@@ -64,7 +64,7 @@ sed -i '/^PASS_WARN_AGE/ c\PASS_WARN_AGE   7' /etc/login.defs
 # Change password policy in /etc/security/pwquality.conf
 # Store pwquality.conf information
 mv /etc/security/pwquality.conf /etc/security/pwquality.conf.info
-echo -e "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepeat = 3\nusercheck = 1\nenforcing = 1\nretry = 3\nenforce_for_root" > /etc/security/pwquality.conf
+echo -e "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepeat = 2\nusercheck = 1\nenforcing = 1\nretry = 3\nenforce_for_root" > /etc/security/pwquality.conf
 echo -e "${Green}Done!${White}"
 
 # Create group "user42"
@@ -86,9 +86,8 @@ done
 
 # Change user password expiry information
 echo "Changing user password expiry information..."
-echo $"date +"%Y-%m-%d""
-chage -d $(date +"%Y-%m-%d)" -m 2 -M 30 -W 7 $username
-chage -d $(date +"%Y-%m-%d)" -m 2 -M 30 -W 7 root
+chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
+chage -d $(date +"%Y-%m-%d")" -m 2 -M 30 -W 7 root
 
 
 
