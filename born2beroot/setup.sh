@@ -43,16 +43,17 @@ function distro_check_and_install {
 		else
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
-			dnf install $1
+			dnf install $1 -y > /dev/null
 			# Install the package through snap if it's not available in the repositories
+			sleep 1
 			if [[ $? > 0 ]]; then
 				echo -e "${Red}$1 is not available in the repositories.${White}"
-				echo -e "${Cyan}Installing $1 through snap...${White}"
+				echo -e "${Cyan}Installing $1 through non standard repos...${White}"
 				sleep 1
-				dnf install snapd
-				check_success_package_install snapd
+				dnf install epel-release -y > /dev/null
+				check_success_package_install "epel-release"
 				sleep 1
-				snap install $1
+				ufw install $1 -y > /dev/null
 				check_success_package_install $1
 			fi
 		fi
