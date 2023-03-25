@@ -43,8 +43,7 @@ function distro_check_and_install {
 		else
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
-			dnf install $1 -y > /dev/null
-			sleep 1
+			dnf install $1
 			# Install the package through snap if it's not available in the repositories
 			if [[ $? > 0 ]]; then
 				echo -e "${Red}$1 is not available in the repositories.${White}"
@@ -144,7 +143,6 @@ echo "Changing user password expiry information..."
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
 sleep 2
-
 
 # Change default ssh port and disable root login
 echo "Changing default ssh port..."
