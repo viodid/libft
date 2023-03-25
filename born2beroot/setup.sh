@@ -78,7 +78,7 @@ useradd -m -s /bin/bash -g user42 -c "User automatically created with the bor2be
 # Setting password to user
 echo -e "${Cyan}Enter a valid password:${White}"
 passwd $username
-while [[ "$?" -gt 0 ]]
+while [[ "$?" > 0 ]]
 do
 	echo -e "${Red}Come on, it's not that difficult... Set your password correctly.${White}"
 	passwd $username
@@ -90,9 +90,24 @@ chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
 
 
-# Change default ssh port
+# Change default ssh port and disable root login
 echo "Changing default ssh port..."
-sed -i '/^Port/ c\Port 4242' /etc/ssh/sshd_config
+# Configure SELinux to allow the new port in CentOs
+if [[ $distro == 2 ]]; then
+	echo -e "$Configuring SELinux to allow the new port..."
+	semanage port -a -t ssh_port_t -p tcp 4242
+fi
+echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/born2beroot.conf
+systemctl restart sshd
+echo $(systemctl status sshd)
+
+# Install UFW
+echo "Installing UFW..."
+distro_check ufw
+ufw allow 4242/tcp
+ufw default deny incoming
+ufw enable
+ufw status
 
 
 
@@ -103,13 +118,13 @@ function distro_check {
 		# Debian
 		# &> redirects standard output and standard error
 		apt list --installed | grep $1 > /dev/null
-		apt-get install $1
+		apt install $1
 		if [[ $? == 0 ]]; then
 			echo -e "${Green}$1 is already installed.${White}"
 		else
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
-			apt-get install $1
+			apt install $1
 	fi
 	elif [[ $distro == 2 ]]; then
 		# CentOs
@@ -121,6 +136,13 @@ function distro_check {
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
 			dnf install $1
+			# Install the package through snap if it's not available in the repositories
+			if [[ $? > 0 ]]; then
+				echo -e "${Red}$1 is not available in the repositories.${White}"
+				echo -e "${Cyan}Installing $1 through snap...${White}"
+				dnf install snapd
+				snap install $1
+			fi
 		fi
 	fi
 }
