@@ -39,7 +39,7 @@ while true; do
 		echo "You selected Debian!"
 		break
 	elif [[ $distro == 2 ]]; then
-		echo "You selected CentOs!"
+		echo -e "You selected CentOs!\nNote that the script only supports CentOs 8 or higher."
 		break
 	else
 		echo -e "${Red}Invalid input. Please enter one of the two options.${White}"
@@ -87,9 +87,21 @@ done
 # Change user password expiry information
 echo "Changing user password expiry information..."
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
-chage -d $(date +"%Y-%m-%d")" -m 2 -M 30 -W 7 root
+chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
 
 
 
+# Check if net-tools is installed
+if [[ $(dpkg -s net-tools | grep Status) == "Status: install ok installed" ]]; then
+	echo -e "${Green}net-tools is already installed.${White}"
+else
+	echo -e "${Red}net-tools is not installed.${White}"
+	echo -e "${Cyan}Installing net-tools...${White}"
+	if [[ $distro == 1 ]]; then
+		apt install net-tools
+	elif [[ $distro == 2 ]]; then
+		dnf install net-tools
+	fi
+fi
 
 exit 0
