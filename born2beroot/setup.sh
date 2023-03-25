@@ -7,6 +7,41 @@
 # https://stackoverflow.com/a/28938235
 # expample
 # echo -e "I ${Red}love${Yellow} Stack Overflow"
+#
+# Install packages
+function distro_check {
+	if [[ $distro == 1 ]]; then
+		# Debian
+		# &> redirects standard output and standard error
+		apt list --installed | grep $1 > /dev/null
+		apt install $1
+		if [[ $? == 0 ]]; then
+			echo -e "${Green}$1 is already installed.${White}"
+		else
+			echo -e "${Red}$1 is not installed.${White}"
+			echo -e "${Cyan}Installing $1...${White}"
+			apt install $1
+	fi
+	elif [[ $distro == 2 ]]; then
+		# CentOs
+		# &> redirects standard output and standard error
+		dnf list installed | grep $1 &> /dev/null
+		if [[ $? == 0 ]]; then
+			echo -e "${Green}$1 is already installed.${White}"
+		else
+			echo -e "${Red}$1 is not installed.${White}"
+			echo -e "${Cyan}Installing $1...${White}"
+			dnf install $1
+			# Install the package through snap if it's not available in the repositories
+			if [[ $? > 0 ]]; then
+				echo -e "${Red}$1 is not available in the repositories.${White}"
+				echo -e "${Cyan}Installing $1 through snap...${White}"
+				dnf install snapd
+				snap install $1
+			fi
+		fi
+	fi
+}
 
 Black='\033[0;30m'        # Black
 Red='\033[0;31m'          # Red
@@ -88,18 +123,21 @@ done
 echo "Changing user password expiry information..."
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
+sleep 1
 
 
 # Change default ssh port and disable root login
 echo "Changing default ssh port..."
 # Configure SELinux to allow the new port in CentOs
 if [[ $distro == 2 ]]; then
-	echo -e "$Configuring SELinux to allow the new port..."
+	echo -e "${Cyan}Configuring SELinux to allow the new port...${White}"
 	semanage port -a -t ssh_port_t -p tcp 4242
 fi
 echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/born2beroot.conf
 systemctl restart sshd
-echo $(systemctl status sshd)
+sleep 1
+systemctl status sshd
+sleep 1
 
 # Install UFW
 echo "Installing UFW..."
@@ -112,40 +150,6 @@ ufw status
 
 
 
-# Install packages
-function distro_check {
-	if [[ $distro == 1 ]]; then
-		# Debian
-		# &> redirects standard output and standard error
-		apt list --installed | grep $1 > /dev/null
-		apt install $1
-		if [[ $? == 0 ]]; then
-			echo -e "${Green}$1 is already installed.${White}"
-		else
-			echo -e "${Red}$1 is not installed.${White}"
-			echo -e "${Cyan}Installing $1...${White}"
-			apt install $1
-	fi
-	elif [[ $distro == 2 ]]; then
-		# CentOs
-		# &> redirects standard output and standard error
-		dnf list installed | grep $1 &> /dev/null
-		if [[ $? == 0 ]]; then
-			echo -e "${Green}$1 is already installed.${White}"
-		else
-			echo -e "${Red}$1 is not installed.${White}"
-			echo -e "${Cyan}Installing $1...${White}"
-			dnf install $1
-			# Install the package through snap if it's not available in the repositories
-			if [[ $? > 0 ]]; then
-				echo -e "${Red}$1 is not available in the repositories.${White}"
-				echo -e "${Cyan}Installing $1 through snap...${White}"
-				dnf install snapd
-				snap install $1
-			fi
-		fi
-	fi
-}
 
 # Check if net-tools is installed
 distro_check net-tools
