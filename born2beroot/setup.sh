@@ -9,7 +9,7 @@
 # echo -e "I ${Red}love${Yellow} Stack Overflow"
 #
 # Install packages
-function distro_check {
+function distro_check_and_install {
 	if [[ $distro == 1 ]]; then
 		# Debian
 		# &> redirects standard output and standard error
@@ -138,6 +138,8 @@ sleep 1
 if [[ $distro == 2 ]]; then
 	echo -e "${Cyan}Configuring SELinux to allow the new port...${White}"
 	sleep 1
+	# Install policycoreutils-python-utils
+	distro_check_and_install policycoreutils-python-utils
 	semanage port -a -t ssh_port_t -p tcp 4242
 fi
 echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/sshd_config.d/born2beroot.conf
@@ -146,7 +148,7 @@ sleep 1
 
 # Install UFW
 echo "Installing UFW..."
-distro_check ufw
+distro_check_and_install ufw
 ufw allow 4242/tcp
 ufw default deny incoming
 ufw enable
@@ -157,6 +159,6 @@ ufw status
 
 
 # Check if net-tools is installed
-distro_check net-tools
+distro_check_and_install net-tools
 
 exit 0
