@@ -78,7 +78,7 @@ useradd -m -s /bin/bash -g user42 -c "User automatically created with the bor2be
 # Setting password to user
 echo -e "${Cyan}Enter a valid password:${White}"
 passwd $username
-while [ "$?" -gt 0 ]
+while [[ "$?" -gt 0 ]]
 do
 	echo -e "${Red}Come on, it's not that difficult... Set your password correctly.${White}"
 	passwd $username
@@ -94,7 +94,9 @@ chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
 # Check if net-tools is installed
 if [[ $distro == 1 ]]; then
 	# Debian
-	if [[ dnf list installed | grep net-tools == "net-tools" ]]; then
+	# &> redirects standard output and standard error
+	apt list --installed | grep net-tools > /dev/null
+	if [[ $? == 0 ]]; then
 		echo -e "${Green}net-tools is already installed.${White}"
 	else
 		echo -e "${Red}net-tools is not installed.${White}"
@@ -103,7 +105,9 @@ if [[ $distro == 1 ]]; then
 	fi
 elif [[ $distro == 2 ]]; then
 	# CentOs
-	if [[ $(rpm -qa | grep net-tools) == "net-tools" ]]; then
+	# &> redirects standard output and standard error
+	dnf list installed | grep net-tools &> /dev/null
+	if [[ $? == 0 ]]; then
 		echo -e "${Green}net-tools is already installed.${White}"
 	else
 		echo -e "${Red}net-tools is not installed.${White}"
