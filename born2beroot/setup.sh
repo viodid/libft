@@ -107,7 +107,7 @@ read username
 echo "Changing hostname..."
 echo "${username}42" > /etc/hostname
 echo -e "127.0.0.1\t"${username}42"\n::1\t\t"${username}42"" > /etc/hosts
-
+sleep 2
 
 echo -e "Changing password policies..."
 # Change password policy in /etc/login.defs
@@ -118,14 +118,17 @@ sed -i '/^PASS_WARN_AGE/ c\PASS_WARN_AGE   7' /etc/login.defs
 # Store pwquality.conf information
 mv /etc/security/pwquality.conf /etc/security/pwquality.conf.info
 echo -e "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepeat = 2\nusercheck = 1\nenforcing = 1\nretry = 3\nenforce_for_root" > /etc/security/pwquality.conf
+sleep 2
 
 # Create group "user42"
 echo "Creating user42 group..."
 groupadd user42
+sleep 2
 
 # Create user
 echo "Creating user..."
 useradd -m -s /bin/bash -g user42 -c "User automatically created with the bor2beroot script" $username
+sleep 2
 
 # Setting password to user
 echo -e "${Cyan}Enter a valid password:${White}"
@@ -138,14 +141,13 @@ done
 
 # Change user password expiry information
 echo "Changing user password expiry information..."
-sleep 1
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
+sleep 2
 
 
 # Change default ssh port and disable root login
 echo "Changing default ssh port..."
-sleep 1
 # Configure SELinux to allow the new port in CentOs
 if [[ $distro == 2 ]]; then
 	echo -e "${Cyan}Configuring SELinux to allow the new port...${White}"
@@ -155,6 +157,7 @@ if [[ $distro == 2 ]]; then
 	semanage port -a -t ssh_port_t -p tcp 4242
 fi
 echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/sshd_config.d/born2beroot.conf
+sleep 2
 echo -e "Restarting sshd service..."
 systemctl restart sshd
 sleep 5
