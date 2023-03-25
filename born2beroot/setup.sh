@@ -79,14 +79,11 @@ useradd -m -s /bin/bash -g user42 -c "User automatically created with the bor2be
 echo -e "${Cyan}Enter a valid password:${White}"
 
 
-while true; do
+passwd $username
+while [ "$?" -gt 0]
+do
+	echo -e "${Red}Come on, it's not that difficult... Set your password correctly.${White}"
 	passwd $username
-	echo $?
-	if [ "$?" -gt "0" ]; then
-		echo -e "${Red}Come on, it's not that difficult... Set your password correctly.${White}"
-	else
-		break
-	fi
 done
 
 	exit 0
