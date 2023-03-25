@@ -77,13 +77,20 @@ useradd -m -s /bin/bash -g user42 -c "User automatically created with the bor2be
 
 # Setting password to user
 echo -e "${Cyan}Enter a valid password:${White}"
-
-
 passwd $username
-while [ "$?" -gt 0]
+while [ "$?" -gt 0 ]
 do
 	echo -e "${Red}Come on, it's not that difficult... Set your password correctly.${White}"
 	passwd $username
 done
 
-	exit 0
+# Change user password expiry information
+echo "Changing user password expiry information..."
+echo $"date +"%Y-%m-%d""
+chage -d $(date +"%Y-%m-%d)" -m 2 -M 30 -W 7 $username
+chage -d $(date +"%Y-%m-%d)" -m 2 -M 30 -W 7 root
+
+
+
+
+exit 0
