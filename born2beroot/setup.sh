@@ -86,8 +86,11 @@ done
 
 # Change user password expiry information
 echo "Changing user password expiry information..."
-chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
-chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
+chage -R -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
+chage -R -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
+
+
+
 
 
 
