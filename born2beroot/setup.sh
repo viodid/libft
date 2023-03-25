@@ -133,7 +133,7 @@ if [[ $distro == 2 ]]; then
 	echo -e "${Cyan}Configuring SELinux to allow the new port...${White}"
 	semanage port -a -t ssh_port_t -p tcp 4242
 fi
-echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/born2beroot.conf
+echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/sshd_config.d/born2beroot.conf
 systemctl restart sshd
 sleep 1
 systemctl status sshd
