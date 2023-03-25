@@ -94,7 +94,7 @@ chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
 # Check if net-tools is installed
 if [[ $distro == 1 ]]; then
 	# Debian
-	if [[ $(dpkg -s net-tools | grep Status) == "Status: install ok installed" ]]; then
+	if [[ dnf list installed | grep net-tools == "net-tools" ]]; then
 		echo -e "${Green}net-tools is already installed.${White}"
 	else
 		echo -e "${Red}net-tools is not installed.${White}"
