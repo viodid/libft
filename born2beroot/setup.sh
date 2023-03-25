@@ -86,37 +86,46 @@ done
 
 # Change user password expiry information
 echo "Changing user password expiry information..."
-chage -R -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
-chage -R -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
+chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
+chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
+
+
+# Change default ssh port
+echo "Changing default ssh port..."
+sed -i '/^Port/ c\Port 4242' /etc/ssh/sshd_config
 
 
 
 
-
+# Install packages
+function distro_check {
+	if [[ $distro == 1 ]]; then
+		# Debian
+		# &> redirects standard output and standard error
+		apt list --installed | grep $1 > /dev/null
+		apt-get install $1
+		if [[ $? == 0 ]]; then
+			echo -e "${Green}$1 is already installed.${White}"
+		else
+			echo -e "${Red}$1 is not installed.${White}"
+			echo -e "${Cyan}Installing $1...${White}"
+			apt-get install $1
+	fi
+	elif [[ $distro == 2 ]]; then
+		# CentOs
+		# &> redirects standard output and standard error
+		dnf list installed | grep $1 &> /dev/null
+		if [[ $? == 0 ]]; then
+			echo -e "${Green}$1 is already installed.${White}"
+		else
+			echo -e "${Red}$1 is not installed.${White}"
+			echo -e "${Cyan}Installing $1...${White}"
+			dnf install $1
+		fi
+	fi
+}
 
 # Check if net-tools is installed
-if [[ $distro == 1 ]]; then
-	# Debian
-	# &> redirects standard output and standard error
-	apt list --installed | grep net-tools > /dev/null
-	if [[ $? == 0 ]]; then
-		echo -e "${Green}net-tools is already installed.${White}"
-	else
-		echo -e "${Red}net-tools is not installed.${White}"
-		echo -e "${Cyan}Installing net-tools...${White}"
-		apt-get install net-tools
-	fi
-elif [[ $distro == 2 ]]; then
-	# CentOs
-	# &> redirects standard output and standard error
-	dnf list installed | grep net-tools &> /dev/null
-	if [[ $? == 0 ]]; then
-		echo -e "${Green}net-tools is already installed.${White}"
-	else
-		echo -e "${Red}net-tools is not installed.${White}"
-		echo -e "${Cyan}Installing net-tools...${White}"
-		dnf install net-tools
-	fi
-fi
+distro_check net-tools
 
 exit 0
