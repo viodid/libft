@@ -8,11 +8,11 @@
 # expample
 # echo -e "I ${Red}love${Yellow} Stack Overflow"
 #
-funtion check_success_package_install
-{
+function check_success_package_install {
 	if [[ $? == 0 ]]; then
 		echo -e "${Green}$1 installed successfully.${White}"
 		return 0
+	fi
 	echo -e "${Red}$1 installation failed.${White}"
 	return 1
 }
@@ -118,7 +118,6 @@ sed -i '/^PASS_WARN_AGE/ c\PASS_WARN_AGE   7' /etc/login.defs
 # Store pwquality.conf information
 mv /etc/security/pwquality.conf /etc/security/pwquality.conf.info
 echo -e "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepeat = 2\nusercheck = 1\nenforcing = 1\nretry = 3\nenforce_for_root" > /etc/security/pwquality.conf
-echo -e "${Green}Done!${White}"
 
 # Create group "user42"
 echo "Creating user42 group..."
@@ -156,12 +155,14 @@ if [[ $distro == 2 ]]; then
 	semanage port -a -t ssh_port_t -p tcp 4242
 fi
 echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/sshd_config.d/born2beroot.conf
+echo -e "Restarting sshd service..."
 systemctl restart sshd
-sleep 1
+sleep 5
 
 # Install UFW
 echo "Installing UFW..."
 distro_check_and_install ufw
+sleep 10
 ufw allow 4242/tcp
 ufw default deny incoming
 ufw enable
