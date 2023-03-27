@@ -44,6 +44,7 @@ function distro_check_and_install {
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
 			dnf install $1
+            check_success_package_install $1 
 			# Install the package through snap if it's not available in the repositories
 			if [[ $? > 0 ]]; then
 				echo -e "${Red}$1 is not available in the repositories.${White}"
@@ -164,10 +165,9 @@ sleep 5
 echo "Installing UFW..."
 distro_check_and_install ufw
 sleep 10
-ufw allow 4242/tcp
-ufw default deny incoming
 ufw enable
-ufw status
+ufw default deny incoming
+ufw allow 4242/tcp
 
 
 
