@@ -167,6 +167,8 @@ distro_check_and_install ufw
 sleep 10
 ufw enable
 ufw default deny incoming
+echo -e "${Cyan}Remove default rules, SAY YES!${White}"
+for i in 4 3 2 1; ufw delete $i; done
 ufw allow 4242/tcp
 
 
