@@ -25,12 +25,12 @@ function distro_check_and_install {
 		apt list --installed | grep $1 &> /dev/null
 		if [[ $? == 0 ]]; then
 			echo -e "${Green}$1 is already installed.${White}"
-			sleep 1 sleep 1 wait
+			sleep 1 wait
 		else
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
 			apt install $1 -y > /dev/null
-			sleep 1 sleep 1 wait
+			sleep 1 wait
 			check_success_package_install $1
 	fi
 	elif [[ $distro == 2 ]]; then
@@ -39,7 +39,7 @@ function distro_check_and_install {
 		dnf list installed | grep $1 &> /dev/null &
 		if [[ $? == 0 ]]; then
 			echo -e "${Green}$1 is already installed.${White}"
-			sleep 1 sleep 1 wait
+			sleep 1 wait
 		else
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
@@ -49,10 +49,10 @@ function distro_check_and_install {
 			if [[ $? > 0 ]]; then
 				echo -e "${Red}$1 is not available in the repositories.${White}"
 				echo -e "${Cyan}Installing $1 through non standard repos...${White}"
-				sleep 1 sleep 1 wait
+				sleep 1 wait
 				dnf install epel-release
 				check_success_package_install epel-release
-				sleep 1 sleep 1 wait
+				sleep 1 wait
 				dnf install $1
 				check_success_package_install $1
 			fi
@@ -107,7 +107,7 @@ read username
 echo "Changing hostname..."
 echo "${username}42" > /etc/hostname
 echo -e "127.0.0.1\t"${username}42"\n::1\t\t"${username}42"" > /etc/hosts
-sleep 1 sleep 1 wait
+sleep 1 wait
 
 echo -e "Changing password policies..."
 # Change password policy in /etc/login.defs
@@ -118,17 +118,17 @@ sed -i '/^PASS_WARN_AGE/ c\PASS_WARN_AGE   7' /etc/login.defs
 # Store pwquality.conf information
 mv /etc/security/pwquality.conf /etc/security/pwquality.conf.info
 echo -e "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepeat = 2\nusercheck = 1\nenforcing = 1\nretry = 3\nenforce_for_root" > /etc/security/pwquality.conf
-sleep 1 sleep 1 wait
+sleep 1 wait
 
 # Create group "user42"
 echo "Creating user42 group..."
 groupadd user42
-sleep 1 sleep 1 wait
+sleep 1 wait
 
 # Create user
 echo "Creating user..."
 useradd -m -s /bin/bash -g user42 -c "User automatically created with the bor2beroot script" $username
-sleep 1 sleep 1 wait
+sleep 1 wait
 
 # Setting password to user
 echo -e "${Cyan}Enter a valid password:${White}"
@@ -143,33 +143,33 @@ done
 echo "Changing user password expiry information..."
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 root
-sleep 1 sleep 1 wait
+sleep 1 wait
 
 # Change default ssh port and disable root login
 echo "Changing default ssh port..."
 # Configure SELinux to allow the new port in CentOs
 if [[ $distro == 2 ]]; then
 	echo -e "${Cyan}Configuring SELinux to allow the new port...${White}"
-	sleep 1 sleep 1 wait
+	sleep 1 wait
 	# Install policycoreutils-python-utils
 	distro_check_and_install policycoreutils-python-utils
 	semanage port -a -t ssh_port_t -p tcp 4242
 fi
 echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/sshd_config.d/born2beroot.conf
-sleep 1 sleep 1 wait
+sleep 1 wait
 echo -e "Restarting sshd service..."
 systemctl restart sshd
-sleep 1 sleep 1 wait
+sleep 1 wait
 
 # Install UFW
 echo "Installing UFW..."
 distro_check_and_install ufw
-sleep 1 sleep 1 wait
+sleep 1 wait
 ufw enable
 ufw default deny incoming
 echo -e "${Cyan}Remove default rules, SAY YES!${White}"
 for i in 4 3 2 1;do ufw delete $i; done
-sleep 1 sleep 1 wait
+sleep 1 wait
 ufw allow 4242/tcp
 
 # Install and configure Sudo
