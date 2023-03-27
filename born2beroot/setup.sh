@@ -52,7 +52,7 @@ function distro_check_and_install {
 				dnf install epel-release -y > /dev/null
 				check_success_package_install "epel-release"
 				sleep 1
-				ufw install $1 -y > /dev/null
+				dnf install $1 -y > /dev/null
 				check_success_package_install $1
 			fi
 		fi
