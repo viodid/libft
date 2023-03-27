@@ -45,7 +45,6 @@ function distro_check_and_install {
 			echo -e "${Cyan}Installing $1...${White}"
 			dnf install $1 -y > /dev/null
 			# Install the package through snap if it's not available in the repositories
-			sleep 1
 			if [[ $? > 0 ]]; then
 				echo -e "${Red}$1 is not available in the repositories.${White}"
 				echo -e "${Cyan}Installing $1 through non standard repos...${White}"
