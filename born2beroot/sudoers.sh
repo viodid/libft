@@ -2,7 +2,7 @@
 #
 # Edit the sudoers file in a safe fashion and add the sudo group
 # with admin privileges.
-# 
+ 
 Green='\033[0;32m'
 
 # Set the user and the temporary file
