@@ -36,7 +36,7 @@ function distro_check_and_install {
 	elif [[ $distro == 2 ]]; then
 		# CentOs
 		# &> redirects standard output and standard error
-		dnf list installed | grep $1 &> /dev/null &
+		dnf list installed | grep $1
 		if [[ $? == 0 ]]; then
 			echo -e "${Green}$1 is already installed.${White}"
 			sleep 1 & wait
