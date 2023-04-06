@@ -50,6 +50,7 @@ function distro_check_and_install {
 				echo -e "${Red}$1 is not available in the repositories.${White}"
 				echo -e "${Cyan}Installing $1 through non standard repos...${White}"
 				sleep 1 & wait
+				echo -e "${Cyan}Installing epel-release...${White}"
 				dnf install epel-release -y &> /dev/null
 				check_success_package_install $?
 				sleep 1 & wait
@@ -162,19 +163,21 @@ systemctl restart sshd
 sleep 1 & wait
 
 # Install UFW
-echo "Installing UFW..."
 distro_check_and_install ufw
 sleep 1 & wait
 ufw enable
 ufw default deny incoming
 echo -e "${Cyan}Remove default rules, SAY YES!${White}"
 for i in 4 3 2 1;do ufw delete $i; done
-sleep 1 & wait
 ufw allow 4242/tcp
+sleep 1 & wait
+ufw status verbose
 
 # Install and configure Sudo
-
-
+echo "Installing and configuring sudo..."
+distro_check_and_install sudo
+groupadd sudo
+usermod -aG sudo $username
 
 
 exit 0
