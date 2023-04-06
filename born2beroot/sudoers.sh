@@ -13,7 +13,7 @@ echo -e "%sudo\tALL=(ALL)\tALL" >> $TMP_SUDOERS
 visudo -c -f $TMP_SUDOERS
 
 # If visudo check is successful, copy the temporary sudoers file to /etc/sudoers
-if [ $? == 0]; then
+if [[ $? == 0 ]]; then
     cp $TMP_SUDOERS /etc/sudoers
     echo "User $USER added to sudoers file with NOPASSWD privileges."
 else
@@ -22,4 +22,3 @@ fi
 
 # Remove the temporary sudoers file
 rm $TMP_SUDOERS
-
