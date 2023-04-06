@@ -36,7 +36,7 @@ function distro_check_and_install {
 	elif [[ $distro == 2 ]]; then
 		# CentOs
 		# &> redirects standard output and standard error
-		dnf list installed | grep $1
+		dnf list installed | grep $1 > /dev/null
 		if [[ $? == 0 ]]; then
 			echo -e "${Green}$1 is already installed.${White}"
 			sleep 1 & wait
@@ -140,6 +140,14 @@ do
 	passwd $username
 done
 
+echo -e "${Cyan}Now a valid passwod for the root user:${White}"
+passwd root
+while [[ "$?" > 0 ]]
+do
+	echo -e "${Red}Come on, it's not that difficult... Set the password correctly.${White}"
+	passwd root
+d
+
 # Change user password expiry information
 echo "Changing user password expiry information..."
 chage -d $(date +"%Y-%m-%d") -m 2 -M 30 -W 7 $username
@@ -174,12 +182,14 @@ sleep 1 & wait
 ufw status verbose
 
 # Install and configure Sudo
-echo "Installing and configuring sudo..."
+echo "Installing and configuring sudo and sudoers file..."
 distro_check_and_install sudo
 groupadd sudo
 usermod -aG sudo $username
 chmod 775 ./sudoers.sh
 ./sudoers.sh
+sleep 1 & wait
+
 
 
 exit 0
