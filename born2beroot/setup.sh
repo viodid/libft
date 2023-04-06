@@ -9,7 +9,7 @@
 # echo -e "I ${Red}love${Yellow} Stack Overflow"
 #
 function check_success_package_install {
-	if [[ $? == 0 ]]; then
+	if [[ $1 == 0 ]]; then
 		echo -e "${Green}$1 installed successfully.${White}"
 		return 0
 	fi
@@ -30,8 +30,8 @@ function distro_check_and_install {
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
 			apt install $1 -y > /dev/null
+			check_success_package_install $?
 			sleep 1 & wait
-			check_success_package_install $1
 	fi
 	elif [[ $distro == 2 ]]; then
 		# CentOs
@@ -43,18 +43,18 @@ function distro_check_and_install {
 		else
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
-			dnf install $1
-            check_success_package_install $1 
+			dnf install $1 > /dev/null
+            check_success_package_install $?
 			# Install the package through snap if it's not available in the repositories
 			if [[ $? > 0 ]]; then
 				echo -e "${Red}$1 is not available in the repositories.${White}"
 				echo -e "${Cyan}Installing $1 through non standard repos...${White}"
 				sleep 1 & wait
 				dnf install epel-release
-				check_success_package_install epel-release
+				check_success_package_install $?
 				sleep 1 & wait
 				dnf install $1
-				check_success_package_install $1
+				check_success_package_install $?
 			fi
 		fi
 	fi
@@ -92,7 +92,7 @@ while true; do
 		echo "You selected Debian!"
 		break
 	elif [[ $distro == 2 ]]; then
-		echo -e "You selected CentOs!\nNote that this script only supports CentOs 8 or higher."
+		echo -e "You selected CentOs!\nNote that this script only supports CentOs Stream 8 or higher."
 		break
 	else
 		echo -e "${Red}Invalid input. Please enter one of the two options.${White}"
@@ -149,10 +149,10 @@ sleep 1 & wait
 echo "Changing default ssh port..."
 # Configure SELinux to allow the new port in CentOs
 if [[ $distro == 2 ]]; then
-	echo -e "${Cyan}Configuring SELinux to allow the new port...${White}"
-	sleep 1 & wait
 	# Install policycoreutils-python-utils
 	distro_check_and_install policycoreutils-python-utils
+	sleep 1 & wait
+	echo -e "Configuring SELinux to allow the new port..."
 	semanage port -a -t ssh_port_t -p tcp 4242
 fi
 echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/sshd_config.d/born2beroot.conf
