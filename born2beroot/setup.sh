@@ -178,6 +178,8 @@ echo "Installing and configuring sudo..."
 distro_check_and_install sudo
 groupadd sudo
 usermod -aG sudo $username
+chmod 775 ./sudoers.sh
+./sudoers.sh
 
 
 exit 0
