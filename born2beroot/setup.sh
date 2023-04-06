@@ -10,10 +10,10 @@
 #
 function check_success_package_install {
 	if [[ $1 == 0 ]]; then
-		echo -e "${Green}$1 installed successfully.${White}"
+		echo -e "${Green}Installed successfully.${White}"
 		return 0
 	fi
-	echo -e "${Red}$1 installation failed.${White}"
+	echo -e "${Red}Installation failed.${White}"
 	return 1
 }
 
@@ -29,7 +29,7 @@ function distro_check_and_install {
 		else
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
-			apt install $1 -y > /dev/null
+			apt install $1 -y &> /dev/null
 			check_success_package_install $?
 			sleep 1 & wait
 	fi
@@ -43,17 +43,17 @@ function distro_check_and_install {
 		else
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
-			dnf install $1 > /dev/null
+			dnf install $1 -y &> /dev/null
             check_success_package_install $?
 			# Install the package through snap if it's not available in the repositories
 			if [[ $? > 0 ]]; then
 				echo -e "${Red}$1 is not available in the repositories.${White}"
 				echo -e "${Cyan}Installing $1 through non standard repos...${White}"
 				sleep 1 & wait
-				dnf install epel-release
+				dnf install epel-release -y &> /dev/null
 				check_success_package_install $?
 				sleep 1 & wait
-				dnf install $1
+				dnf install $1 -y &> /dev/null
 				check_success_package_install $?
 			fi
 		fi
