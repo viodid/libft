@@ -96,7 +96,7 @@ if [[ "$distro_name" == "debian" ]]; then
 	echo -e "${Green}You are running Debian!${White}"
 	distro=1
 elif [[ "$distro_name" == "centos" ]]; then 
-	echo -e "${Green}You are running CentOs!\nNote that this script only supports CentOS Stream 8 or higher.${White}"
+	echo -e "${Green}You are running CentOS!\nNote that this script only supports CentOS Stream 8 or higher.${White}"
 	distro=2
 else
 	echo -e "${Red}This script only supports Debian and CentOS.${White}"
@@ -143,7 +143,6 @@ do
 	passwd $username
 done
 
-echo -e "${Cyan}Now a valid passwod for the root user:${White}"
 passwd root
 while [[ "$?" > 0 ]]
 do
@@ -193,6 +192,5 @@ usermod -aG sudo $username
 chmod 775 ./sudoers.sh
 ./sudoers.sh
 sleep 1 & wait
-
 
 exit 0
