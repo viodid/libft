@@ -90,12 +90,12 @@ fi
 # Check if the script is running on a supported linux distro
 distro=$(cat /etc/os-release | grep -i ^id= | cut -d '=' -f 2)
 
-echo "$distro"
+echo "$distro_name"
 # Linux distro election; 1 for Debian, 2 for CentOs
-if [[ $distro == "debian" ]]; then
+if [[ "$distro_name" == "debian" ]]; then
 	echo -e "${Green}You are running Debian!${White}"
 	distro=1
-elif [[ $distro == ""centos"" ]]; then 
+elif [[ "$distro_name" == "centos" ]]; then 
 	echo -e "${Green}You are running CentOs!\nNote that this script only supports CentOS Stream 8 or higher.${White}"
 	distro=2
 else
