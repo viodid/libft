@@ -94,7 +94,7 @@ distro=$(cat /etc/os-release | grep -i ^id= | cut -d '=' -f 2)
 if [[ $distro == debian ]]; then
 	echo -e "${Green}You are running Debian!${White}"
 	distro=1
-elif [[ $distro == centos ]]; then
+elif [[ $distro == centos ]] || [[ $distro == "centos" ]]; then
 	echo -e "${Green}You are running CentOs!\nNote that this script only supports CentOS Stream 8 or higher.${White}"
 	distro=2
 else
