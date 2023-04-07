@@ -189,6 +189,9 @@ distro_check_and_install sudo
 groupadd sudo
 usermod -aG sudo $username
 chmod 775 ./sudoers.sh
+# Create custom sudo log file
+mkdir -p /var/log/sudo
+touch /var/log/sudo/custom_sudo.log
 ./sudoers.sh
 sleep 1 & wait
 

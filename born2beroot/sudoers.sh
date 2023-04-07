@@ -19,6 +19,9 @@ echo -e "%sudo\tALL=(ALL)\tALL" >> $TMP_SUDOERS
 echo -e "Defaults\tbadpass_message=\"Nope. That's not it. Get your shit together!\"" \
 	>> $TMP_SUDOERS
 
+# Change the log file location
+echo -e "Defaults\tlogfile=/var/log/sudo/custom_sudo.log" >> $TMP_SUDOERS
+
 # Check the syntax of the modified sudoers file with visudo
 visudo -c -f $TMP_SUDOERS
 
