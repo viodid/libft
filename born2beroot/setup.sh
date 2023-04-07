@@ -81,24 +81,26 @@ echo -en "${Purple}
 ╚═════╝░░╚════╝░╚═╝░░╚═╝╚═╝░░╚══╝╚══════╝╚═════╝░╚══════╝╚═╝░░╚═╝░╚════╝░░╚════╝░░░░╚═╝░░░
 "
 
-# Disclaimer
-echo -e "${Green}\nBe aware that the script must be executed with root privileges, otherwise the script will fail.\nIf you don't know how to login as root, try: ${Yellow}sudo su -"
+# Check if the script is running as root
+if [[ $EUID != 0 ]]; then
+	echo -e "${Red}\nThis script must be run as root. If you don't know how to login as root, try: ${Yellow}sudo su - root${White}"
+	exit 1
+fi
 
-# Let the user write which linux distro is the script running on
+# Check if the script is running on a supported linux distro
+distro=$(cat /etc/os-release | grep -i ^id= | cut -d '=' -f 2)
+
 # Linux distro election; 1 for Debian, 2 for CentOs
-while true; do
-	echo -e "\n${Cyan}What distro have you chose?\n${White}1. Debian\n2. CentOs"
-	read distro 
-	if [[ $distro == 1 ]]; then
-		echo "You selected Debian!"
-		break
-	elif [[ $distro == 2 ]]; then
-		echo -e "You selected CentOs!\nNote that this script only supports CentOs Stream 8 or higher."
-		break
-	else
-		echo -e "${Red}Invalid input. Please enter one of the two options.${White}"
-	fi
-done
+if [[ $distro == debian ]]; then
+	echo -e "${Green}You are running Debian!${White}"
+	distro=1
+elif [[ $distro == centos ]]; then
+	echo -e "${Green}You are running CentOs!\nNote that this script only supports CentOS Stream 8 or higher.${White}"
+	distro=2
+else
+	echo -e "${Red}This script only supports Debian and CentOs.${White}"
+	exit 1
+fi
 
 
 echo -e "Setting up enviroment\n${Cyan}Please enter you username (login):${White}"
@@ -178,6 +180,7 @@ ufw default deny incoming
 echo -e "${Cyan}Remove default rules, SAY YES!${White}"
 for i in 4 3 2 1;do ufw delete $i; done
 ufw allow 4242/tcp
+systemctl enable ufw
 sleep 1 & wait
 ufw status verbose
 
@@ -189,7 +192,6 @@ usermod -aG sudo $username
 chmod 775 ./sudoers.sh
 ./sudoers.sh
 sleep 1 & wait
-
 
 
 exit 0
