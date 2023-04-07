@@ -148,7 +148,7 @@ while [[ "$?" > 0 ]]
 do
 	echo -e "${Red}Come on, it's not that difficult... Set the password correctly.${White}"
 	passwd root
-d
+done
 
 # Change user password expiry information
 echo "Changing user password expiry information..."
