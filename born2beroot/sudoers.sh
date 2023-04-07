@@ -12,8 +12,12 @@ TMP_SUDOERS="/tmp/sudoers.tmp"
 # Create a backup of the original sudoers file
 cp /etc/sudoers $TMP_SUDOERS
 
-# Add the user with NOPASSWD privileges to the temporary sudoers file
-echo -e "%sudo\tALL=(ALL)\tALL" >> $TMP_SUDOERS
+# Create a Cmnd_Alias for sudo
+echo -e "Cmnd_Alias\tADMIN_CMDS = usr/local/sbin,/usr/local/bin,/usr/sbin,\\
+/usr/bin,/sbin:/bin,/snap/bin"
+
+# Add sudo group ADMIN_CMDS privileges
+echo -e "%sudo\tADMIN_CMDS=ALL" >> $TMP_SUDOERS
 
 # Changing default sudo error password message
 echo -e "Defaults\tbadpass_message=\"Nope. That's not it. Get your shit together!\"" \
@@ -22,8 +26,9 @@ echo -e "Defaults\tbadpass_message=\"Nope. That's not it. Get your shit together
 # Change the log file location
 echo -e "Defaults\tlogfile=/var/log/sudo/custom_sudo.log" >> $TMP_SUDOERS
 
+
 # Check the syntax of the modified sudoers file with visudo
-visudo -c -f $TMP_SUDOERS
+visudo -c -f $TMP_SUDOERS > /dev/null
 
 # If visudo check is successful, copy the temporary sudoers file to /etc/sudoers
 if [[ $? == 0 ]]; then
