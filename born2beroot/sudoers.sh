@@ -4,6 +4,7 @@
 # with admin privileges.
  
 Green='\033[0;32m'
+White='\033[0;37m'
 
 # Set the user and the temporary file
 TMP_SUDOERS="/tmp/sudoers.tmp"
@@ -15,7 +16,8 @@ cp /etc/sudoers $TMP_SUDOERS
 echo -e "%sudo\tALL=(ALL)\tALL" >> $TMP_SUDOERS
 
 # Changing default sudo error password message
-echo -e "Defaults\tbadpass_message=\"Nope. That's not it. Get your shit together!\""
+echo -e "Defaults\tbadpass_message=\"Nope. That's not it. Get your shit together!\"" \
+	> $TMP_SUDOERS
 
 # Check the syntax of the modified sudoers file with visudo
 visudo -c -f $TMP_SUDOERS
