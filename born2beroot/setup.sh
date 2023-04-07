@@ -79,7 +79,7 @@ echo -en "${Purple}
 ██╔══██╗██║░░██║██╔══██╗██║╚████║██╔══╝░░██╔══██╗██╔══╝░░██╔══██╗██║░░██║██║░░██║░░░██║░░░
 ██████╦╝╚█████╔╝██║░░██║██║░╚███║███████╗██████╦╝███████╗██║░░██║╚█████╔╝╚█████╔╝░░░██║░░░
 ╚═════╝░░╚════╝░╚═╝░░╚═╝╚═╝░░╚══╝╚══════╝╚═════╝░╚══════╝╚═╝░░╚═╝░╚════╝░░╚════╝░░░░╚═╝░░░
-"
+${White}"
 
 # Check if the script is running as root
 if [[ $EUID != 0 ]]; then
@@ -92,14 +92,14 @@ distro=$(cat /etc/os-release | grep -i ^id= | cut -d '=' -f 2)
 
 echo "$distro"
 # Linux distro election; 1 for Debian, 2 for CentOs
-if [ "$distro" == debian ]; then
+if [[ $distro == "debian" ]]; then
 	echo -e "${Green}You are running Debian!${White}"
 	distro=1
-elif [ "$distro" == "centos" ]; then 
+elif [[ $distro == ""centos"" ]]; then 
 	echo -e "${Green}You are running CentOs!\nNote that this script only supports CentOS Stream 8 or higher.${White}"
 	distro=2
 else
-	echo -e "${Red}This script only supports Debian and CentOs.${White}"
+	echo -e "${Red}This script only supports Debian and CentOS.${White}"
 	exit 1
 fi
 
