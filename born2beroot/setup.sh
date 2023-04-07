@@ -195,4 +195,23 @@ touch /var/log/sudo/custom_sudo.log
 ./sudoers.sh
 sleep 1 & wait
 
+# Adding monitoring.sh to crontab every 10 minutes
+echo "Adding monitoring.sh to crontab..."
+mv ./monitoring.sh /root
+chmod 775 /root/monitoring.sh
+echo -e "*/10 * * * * root /root/monitoring.sh" > /etc/cron.d/monitoring
+systemctl restart crond > /dev/null
+sleep 1 & wait
+
+# Reboot the system
+echo -e "${Green}All done!${White}"
+echo -e "${Cyan}Rebooting the system to apply the changes [y/n]${White}"
+while true; do
+	read -p "" yn
+	case $yn in
+		[Yy]* ) reboot; break;;
+		[Nn]* ) exit;;
+		* ) echo -e "${Red}Please answer yes or no.${White}";;
+	esac
+done
 exit 0
