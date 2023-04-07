@@ -13,11 +13,11 @@ TMP_SUDOERS="/tmp/sudoers.tmp"
 cp /etc/sudoers $TMP_SUDOERS
 
 # Create a Cmnd_Alias for sudo
-echo -e "Cmnd_Alias\tADMIN_CMDS=usr/local/sbin,/usr/local/bin,/usr/sbin,\\
-/usr/bin,/sbin:/bin,/snap/bin" >> $TMP_SUDOERS
+echo -e "Cmnd_Alias ADMIN = usr/local/sbin, /usr/local/bin, /usr/sbin, \\
+/usr/bin, /sbin:/bin, /snap/bin" >> $TMP_SUDOERS
 
-# Add sudo group ADMIN_CMDS privileges
-echo -e "%sudo\tADMIN_CMDS=ALL" >> $TMP_SUDOERS
+# Add sudo group ADMIN privileges
+echo -e "%sudo\tALL=(ALL:ALL) ADMIN" >> $TMP_SUDOERS
 
 # Changing default sudo error password message
 echo -e "Defaults\tbadpass_message=\"Nope. That's not it. Get your shit together!\"" \
