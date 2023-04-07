@@ -14,7 +14,7 @@ cp /etc/sudoers $TMP_SUDOERS
 
 # Create a Cmnd_Alias for sudo
 echo -e "Cmnd_Alias\tADMIN_CMDS = usr/local/sbin,/usr/local/bin,/usr/sbin,\\
-/usr/bin,/sbin:/bin,/snap/bin"
+/usr/bin,/sbin:/bin,/snap/bin" >> $TMP_SUDOERS
 
 # Add sudo group ADMIN_CMDS privileges
 echo -e "%sudo\tADMIN_CMDS=ALL" >> $TMP_SUDOERS
