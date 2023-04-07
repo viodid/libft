@@ -17,7 +17,7 @@ echo -e "%sudo\tALL=(ALL)\tALL" >> $TMP_SUDOERS
 
 # Changing default sudo error password message
 echo -e "Defaults\tbadpass_message=\"Nope. That's not it. Get your shit together!\"" \
-	> $TMP_SUDOERS
+	>> $TMP_SUDOERS
 
 # Check the syntax of the modified sudoers file with visudo
 visudo -c -f $TMP_SUDOERS

@@ -180,9 +180,8 @@ ufw default deny incoming
 echo -e "${Cyan}Remove default rules, SAY YES!${White}"
 for i in 4 3 2 1;do ufw delete $i; done
 ufw allow 4242/tcp
-systemctl enable ufw
+systemctl enable ufw > /dev/null
 sleep 1 & wait
-ufw status verbose
 
 # Install and configure Sudo
 echo "Installing and configuring sudo and sudoers file..."
