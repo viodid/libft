@@ -10,6 +10,7 @@ White='\033[0;37m'
 TMP_SUDOERS="/tmp/sudoers.tmp"
 
 # Create a backup of the original sudoers file cp /etc/sudoers $TMP_SUDOERS
+cp /etc/sudoers $TMP_SUDOERS
 
 # Create a Cmnd_Alias for sudo
 echo -e "Cmnd_Alias ADMIN = /usr/local/sbin/, /usr/local/bin/, /usr/sbin/, \\
