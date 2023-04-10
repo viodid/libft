@@ -9,16 +9,14 @@ White='\033[0;37m'
 # Set the user and the temporary file
 TMP_SUDOERS="/tmp/sudoers.tmp"
 
-# Create a backup of the original sudoers file
-cp /etc/sudoers $TMP_SUDOERS
+# Create a backup of the original sudoers file cp /etc/sudoers $TMP_SUDOERS
 
 # Create a Cmnd_Alias for sudo
-# TODO
-echo -e "Cmnd_Alias ADMIN = /usr/local/sbin, /usr/local/bin, /usr/sbin, \\
-/usr/bin, /sbin, /bin, /snap/bin, /usr/bin/dnf" >> $TMP_SUDOERS
+echo -e "Cmnd_Alias ADMIN = /usr/local/sbin/, /usr/local/bin/, /usr/sbin/, \\
+/usr/bin/, /sbin/, /bin/, /snap/bin/" >> $TMP_SUDOERS
 
 # Add sudo group ADMIN privileges
-echo -e "%sudo\tALL=(ALL:ALL) ADMIN" >> $TMP_SUDOERS
+echo -e "%sudo\tALL=ADMIN" >> $TMP_SUDOERS
 
 # Changing default sudo error password message
 echo -e "Defaults\tbadpass_message=\"Nope. That's not it. Get your shit together!\"" \
