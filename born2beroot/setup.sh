@@ -43,7 +43,7 @@ function distro_check_and_install {
 		else
 			echo -e "${Red}$1 is not installed.${White}"
 			echo -e "${Cyan}Installing $1...${White}"
-			dnf install $1 -y &> /dev/null
+			dnf install $1 -y --nogpgcheck &> /dev/null
             check_success_package_install $?
 			# Install the package through snap if it's not available in the repositories
 			if [[ $? > 0 ]]; then
@@ -51,10 +51,10 @@ function distro_check_and_install {
 				echo -e "${Cyan}Installing $1 through non standard repos...${White}"
 				sleep 1 & wait
 				echo -e "${Cyan}Installing epel-release...${White}"
-				dnf install epel-release -y &> /dev/null
+				dnf install epel-release -y --nogpgcheck &> /dev/null
 				check_success_package_install $?
 				sleep 1 & wait
-				dnf install $1 -y &> /dev/null
+				dnf install $1 -y --nogpgcheck &> /dev/null
 				check_success_package_install $?
 			fi
 		fi
