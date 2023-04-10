@@ -197,7 +197,7 @@ sleep 1 & wait
 
 # Adding monitoring.sh to crontab every 10 minutes
 echo "Adding monitoring.sh to crontab..."
-mv ./monitoring.sh /root
+cp ./monitoring.sh /root
 chmod 775 /root/monitoring.sh
 echo -e "*/10 * * * * root /root/monitoring.sh" > /etc/cron.d/monitoring
 systemctl restart crond > /dev/null
