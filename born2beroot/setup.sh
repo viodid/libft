@@ -120,8 +120,13 @@ sed -i '/^PASS_MIN_DAYS/ c\PASS_MIN_DAYS   2' /etc/login.defs
 sed -i '/^PASS_WARN_AGE/ c\PASS_WARN_AGE   7' /etc/login.defs
 # Change password policy in /etc/security/pwquality.conf
 # Store pwquality.conf information
-mv /etc/security/pwquality.conf /etc/security/pwquality.conf.info
-echo -e "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepeat = 2\nusercheck = 1\nenforcing = 1\nretry = 3\nenforce_for_root" > /etc/security/pwquality.conf
+if [[ $distro == 2 ]]; then
+	mv /etc/security/pwquality.conf /etc/security/pwquality.conf.info
+	echo -e "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepeat = 2\nusercheck = 1\nenforcing = 1\nretry = 3\nenforce_for_root" > /etc/security/pwquality.conf
+elif [[ $distro == 1 ]]; then
+	mv /etc/pam.d/common-password /etc/pam.d/common-password.info
+	echo -e "password\trequisite\tpam_pwquality.so try_first_pass retry=3 difok=7 minlen=10 dcredit=-1 ucredit=-1 lcredit=-1 maxrepeat=2 enforce_for_root" > /etc/pam.d/common-password
+fi
 sleep 1 & wait
 
 # Create group "user42"
