@@ -17,7 +17,7 @@ ulog=$(users | wc -w)
 ip=$(hostname -I)
 mac=$(ip link show | awk '$1 == "link/ether" {print $2}')
 cmds=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
-# broadcast our system information on all terminals
+# broadcast the system information on all terminals
 wall "	#Architecture: $arc
 	#CPU physical: $pcpu
 	#vCPU: $vcpu
