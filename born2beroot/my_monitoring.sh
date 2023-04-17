@@ -1,8 +1,6 @@
 ram_usage=$(free -m | awk '/Mem:/ { print $3}')
 ram_total=$(free -m | awk '/Mem:/ { print $2}')
-percentage=$(echo "scale=2; $ram_usage / $ram_total" | bc)
-echo "here------------------"
-echo $percentage
+percentage=$(free -m | awk '/Mem:/ { print $3/$2 * 100.0}')
 wall "
   #Architecture: $(uname -a)
   #CPU physical: $(grep "^processor" /proc/cpuinfo | wc -l)
