@@ -16,4 +16,5 @@ wall "
   #Connexions TCP: $(ss -s | awk '/TCP:/ {print $2}')
   #User log: $(users | wc -w)
   #Network: IP $(ip a | awk '/inet 10/ {print $2}') ($(ip a | awk '/link\/ether/ {print $2}' ))
+  #Sudo: $(grep -c sudo /var/log/auth.log)
 "
