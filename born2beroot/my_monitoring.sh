@@ -15,4 +15,5 @@ wall "
   #LVM use: $(if [[ $(lsblk | grep lvm | wc -l) > 0 ]]; then echo yes; else echo no; fi)
   #Connexions TCP: $(ss -s | awk '/TCP:/ {print $2}')
   #User log: $(users | wc -w)
+  #Network: IP $(ip a | awk '/inet 10/ {print $3}') ($(ip a | awk '/link\/ehter/ { print $2}' ))
 "
