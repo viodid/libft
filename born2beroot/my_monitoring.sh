@@ -9,6 +9,10 @@ wall "
   #CPU physical: $(grep "^processor" /proc/cpuinfo | wc -l)
   #vCPU: $(grep "^processor" /proc/cpuinfo | wc -l)
   #Memory Usage: ${ram_usage}MiB/${ram_total}MiB (${percentage}%)
-  #Disk Usage: ${disk_usage}/${disk_total} (${disk_percentage}%)
-
+  #Disk Usage: ${disk_usage}/${disk_total} (${disk_percentage})
+  #CPU load: $(top -bn1 | grep load | awk '{printf "%.2f%%\t\t", $(NF-2)}')
+  #Last boot: $(who -b | awk '{print $3,$4}')
+  #LVM use: $(if [[ $(lsblk | grep lvm | wc -l) > 0 ]]; then echo yes; else echo no; fi)
+  #Connexions TCP: $(ss -s | awk '/TCP:/ {print $2}')
+  #User log: $(users | wc -w)
 "
