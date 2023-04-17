@@ -168,6 +168,9 @@ if [[ $distro == 2 ]]; then
 fi
 echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/sshd_config.d/born2beroot.conf
 sleep 1 & wait
+echo -e "Delete root login from sshd_config..."
+[ -f "/etc/ssh/sshd_config.d/01-permitrootlogin.conf" ]\
+	&& sudo rm "/etc/ssh/sshd_config.d/01-permitrootlogin.conf"
 echo -e "Restarting sshd service..."
 systemctl restart sshd
 sleep 1 & wait
