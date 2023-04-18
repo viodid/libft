@@ -9,67 +9,67 @@
 # echo -e "I ${Red}love${Yellow} Stack Overflow"
 #
 function check_success_package_install {
-	if [[ $1 == 0 ]]; then
-		echo -e "${Green}Installed successfully.${White}"
-		return 0
-	fi
-	echo -e "${Red}Installation failed.${White}"
-	return 1
+  if [[ $1 == 0 ]]; then
+    echo -e "${Green}Installed successfully.${White}"
+    return 0
+  fi
+  echo -e "${Red}Installation failed.${White}"
+  return 1
 }
 
 # Install packages
 function distro_check_and_install {
-	if [[ $distro == 1 ]]; then
-		# Debian
-		# &> redirects standard output and standard error
-		apt list --installed | grep $1 &> /dev/null
-		if [[ $? == 0 ]]; then
-			echo -e "${Green}$1 is already installed.${White}"
-			sleep 1 & wait
-		else
-			echo -e "${Red}$1 is not installed.${White}"
-			echo -e "${Cyan}Installing $1...${White}"
-			apt install $1 -y &> /dev/null
-			check_success_package_install $?
-			sleep 1 & wait
-	fi
-	elif [[ $distro == 2 ]]; then
-		# CentOs
-		# &> redirects standard output and standard error
-		dnf list installed | grep $1 > /dev/null
-		if [[ $? == 0 ]]; then
-			echo -e "${Green}$1 is already installed.${White}"
-			sleep 1 & wait
-		else
-			echo -e "${Red}$1 is not installed.${White}"
-			echo -e "${Cyan}Installing $1...${White}"
-			dnf install $1 -y --nogpgcheck &> /dev/null
-            check_success_package_install $?
-			# Install the package through snap if it's not available in the repositories
-			if [[ $? > 0 ]]; then
-				echo -e "${Red}$1 is not available in the repositories.${White}"
-				echo -e "${Cyan}Installing $1 through non standard repos...${White}"
-				sleep 1 & wait
-				echo -e "${Cyan}Installing epel-release...${White}"
-				dnf install epel-release -y --nogpgcheck &> /dev/null
-				check_success_package_install $?
-				sleep 1 & wait
-				dnf install $1 -y --nogpgcheck &> /dev/null
-				check_success_package_install $?
-			fi
-		fi
-	fi
-}
+  if [[ $distro == 1 ]]; then
+    # Debian
+    # &> redirects standard output and standard error
+    apt list --installed | grep $1 &> /dev/null
+    if [[ $? == 0 ]]; then
+      echo -e "${Green}$1 is already installed.${White}"
+      sleep 1 & wait
+    else
+      echo -e "${Red}$1 is not installed.${White}"
+      echo -e "${Cyan}Installing $1...${White}"
+      apt install $1 -y &> /dev/null
+      check_success_package_install $?
+      sleep 1 & wait
+    fi
+  elif [[ $distro == 2 ]]; then
+    # CentOs
+    # &> redirects standard output and standard error
+    dnf list installed | grep $1 > /dev/null
+    if [[ $? == 0 ]]; then
+      echo -e "${Green}$1 is already installed.${White}"
+      sleep 1 & wait
+    else
+      echo -e "${Red}$1 is not installed.${White}"
+      echo -e "${Cyan}Installing $1...${White}"
+      dnf install $1 -y --nogpgcheck &> /dev/null
+      check_success_package_install $?
+      # Install the package through snap if it's not available in the repositories
+      if [[ $? > 0 ]]; then
+        echo -e "${Red}$1 is not available in the repositories.${White}"
+        echo -e "${Cyan}Installing $1 through non standard repos...${White}"
+        sleep 1 & wait
+        echo -e "${Cyan}Installing epel-release...${White}"
+        dnf install epel-release -y --nogpgcheck &> /dev/null
+        check_success_package_install $?
+        sleep 1 & wait
+        dnf install $1 -y --nogpgcheck &> /dev/null
+        check_success_package_install $?
+      fi
+      fi
+    fi
+  }
 
 
-Black='\033[0;30m'        # Black
-Red='\033[0;31m'          # Red
-Green='\033[0;32m'        # Green
-Yellow='\033[0;33m'       # Yellow
-Blue='\033[0;34m'         # Blue
-Purple='\033[0;35m'       # Purple
-Cyan='\033[0;36m'         # Cyan
-White='\033[0;37m'        # White
+  Black='\033[0;30m'        # Black
+  Red='\033[0;31m'          # Red
+  Green='\033[0;32m'        # Green
+  Yellow='\033[0;33m'       # Yellow
+  Blue='\033[0;34m'         # Blue
+  Purple='\033[0;35m'       # Purple
+  Cyan='\033[0;36m'         # Cyan
+  White='\033[0;37m'        # White
 
 # Intro ascii art
 echo -en "${Purple}
@@ -83,8 +83,8 @@ ${White}"
 
 # Check if the script is running as root
 if [[ $EUID != 0 ]]; then
-	echo -e "${Red}\nThis script must be run as root. If you don't know how to login as root, try: ${Yellow}sudo su - root${White}"
-	exit 1
+  echo -e "${Red}\nThis script must be run as root. If you don't know how to login as root, try: ${Yellow}sudo su - root${White}"
+  exit 1
 fi
 
 # Check if the script is running on a supported linux distro
@@ -93,14 +93,14 @@ distro_name=$(cat /etc/os-release | grep -i ^id= | cut -d '=' -f 2 | tr -d '"' |
 echo "$distro_name"
 # Linux distro election; 1 for Debian, 2 for CentOs
 if [[ "$distro_name" == "debian" ]]; then
-	echo -e "${Green}You are running Debian!${White}"
-	distro=1
+  echo -e "${Green}You are running Debian!${White}"
+  distro=1
 elif [[ "$distro_name" == "centos" ]]; then 
-	echo -e "${Green}You are running CentOS!\nNote that this script only supports CentOS Stream 8 or higher.${White}"
-	distro=2
+  echo -e "${Green}You are running CentOS!\nNote that this script only supports CentOS Stream 8 or higher.${White}"
+  distro=2
 else
-	echo -e "${Red}This script only supports Debian and CentOS.${White}"
-	exit 1
+  echo -e "${Red}This script only supports Debian and CentOS.${White}"
+  exit 1
 fi
 
 
@@ -121,11 +121,18 @@ sed -i '/^PASS_WARN_AGE/ c\PASS_WARN_AGE   7' /etc/login.defs
 # Change password policy in /etc/security/pwquality.conf
 # Store pwquality.conf information
 if [[ $distro == 2 ]]; then
-	mv /etc/security/pwquality.conf /etc/security/pwquality.conf.info
-	echo -e "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepeat = 2\nusercheck = 1\nenforcing = 1\nretry = 3\nenforce_for_root" > /etc/security/pwquality.conf
+  # CentOs
+  mv /etc/security/pwquality.conf /etc/security/pwquality.conf.info
+  echo -e "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepeat = 2\nusercheck = 1\nenforcing = 1\nretry = 3\nenforce_for_root" > /etc/security/pwquality.conf
 elif [[ $distro == 1 ]]; then
-	mv /etc/pam.d/common-password /etc/pam.d/common-password.info
-	echo -e "password\trequisite\tpam_pwquality.so try_first_pass retry=3 difok=7 minlen=10 dcredit=-1 ucredit=-1 lcredit=-1 maxrepeat=2 enforce_for_root" > /etc/pam.d/common-password
+  # Debian
+  mv ./difok_except_root.sh /usr/local/sbin/difok_except_root.sh
+  mv /etc/pam.d/common-password /etc/pam.d/common-password.info
+  echo -e "password required pam_exec.so expose_authtok /usr/local/sbin/difok_except_root.sh" > /etc/pam.d/common-password
+  echo -e "password requisite pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3" > /etc/pam.d/common-password
+  echo -e "password [success=1 default=ignore] pam_unix.so obscure use_authtok try_first_pass sha512" > /etc/pam.d/common-password
+  echo -e "password required pam_permit.so" > /etc/pam.d/common-password
+
 fi
 sleep 1 & wait
 
@@ -144,15 +151,15 @@ echo -e "${Cyan}Enter a valid password:${White}"
 passwd $username
 while [[ "$?" > 0 ]]
 do
-	echo -e "${Red}Come on, it's not that difficult... Set your password correctly.${White}"
-	passwd $username
+  echo -e "${Red}Come on, it's not that difficult... Set your password correctly.${White}"
+  passwd $username
 done
 
 passwd root
 while [[ "$?" > 0 ]]
 do
-	echo -e "${Red}Come on, it's not that difficult... Set the password correctly.${White}"
-	passwd root
+  echo -e "${Red}Come on, it's not that difficult... Set the password correctly.${White}"
+  passwd root
 done
 
 # Change user password expiry information
@@ -165,20 +172,20 @@ sleep 1 & wait
 echo "Changing default ssh port..."
 # Configure SELinux to allow the new port in CentOs
 if [[ $distro == 2 ]]; then
-	# Install policycoreutils-python-utils
-	distro_check_and_install policycoreutils-python-utils
-	sleep 1 & wait
-	echo -e "Configuring SELinux to allow the new port..."
-	semanage port -a -t ssh_port_t -p tcp 4242
+  # Install policycoreutils-python-utils
+  distro_check_and_install policycoreutils-python-utils
+  sleep 1 & wait
+  echo -e "Configuring SELinux to allow the new port..."
+  semanage port -a -t ssh_port_t -p tcp 4242
 fi
 echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/sshd_config.d/born2beroot.conf
 sleep 1 & wait
 echo -e "Delete root login from sshd_config..."
 [ -f "/etc/ssh/sshd_config.d/01-permitrootlogin.conf" ]\
-	&& sudo rm "/etc/ssh/sshd_config.d/01-permitrootlogin.conf"
-echo -e "Restarting sshd service..."
-systemctl restart sshd
-sleep 1 & wait
+  && sudo rm "/etc/ssh/sshd_config.d/01-permitrootlogin.conf"
+  echo -e "Restarting sshd service..."
+  systemctl restart sshd
+  sleep 1 & wait
 
 # Install UFW
 distro_check_and_install ufw
@@ -215,11 +222,11 @@ sleep 1 & wait
 echo -e "${Green}All done!${White}"
 echo -e "${Cyan}Rebooting the system to apply the changes [y/n]${White}"
 while true; do
-	read -p "" yn
-	case $yn in
-		[Yy]* ) reboot; break;;
-		[Nn]* ) exit;;
-		* ) echo -e "${Red}Please answer yes or no.${White}";;
-	esac
+  read -p "" yn
+  case $yn in
+    [Yy]* ) reboot; break;;
+    [Nn]* ) exit;;
+    * ) echo -e "${Red}Please answer yes or no.${White}";;
+  esac
 done
 exit 0
