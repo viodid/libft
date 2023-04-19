@@ -1,3 +1,4 @@
+# TODO: Does not show properly on not root user
 ram_usage=$(free -m | awk '/Mem:/ { print $3}')
 ram_total=$(free -m | awk '/Mem:/ { print $2}')
 percentage=$(free -m | awk '/Mem:/ { print $3/$2 * 100.0}')
