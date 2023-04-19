@@ -5,6 +5,7 @@ disk_usage=$(df -h | grep /$  | awk '{ print $3}')
 disk_total=$(df -h | grep /$  | awk '{ print $2}')
 disk_percentage=$(df -h | grep /$  | awk '{ print $5}')
 wall "
+  #Operating System: $(hostnamectl status | grep -i operating | cut -d ':' -f 2 | tr -d ' ')
   #Architecture: $(uname -a)
   #CPU physical: $(grep "^processor" /proc/cpuinfo | wc -l)
   #vCPU: $(grep "^processor" /proc/cpuinfo | wc -l)
