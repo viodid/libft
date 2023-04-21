@@ -126,12 +126,17 @@ if [[ $distro == 2 ]]; then
   echo -e "difok = 7\nminlen = 10\ndcredit = -1\nucredit = -1\nlcredit = -1\nmaxrepeat = 2\nusercheck = 1\nenforcing = 1\nretry = 3\nenforce_for_root" > /etc/security/pwquality.conf
 elif [[ $distro == 1 ]]; then
   # Debian
+  distro_check_and_install "libpam-pwquality"
   mv ./difok_except_root.sh /usr/local/sbin/
   echo -e "password required pam_exec.so expose_authtok /usr/local/sbin/difok_except_root.sh" >> /etc/pam.d/common-password
-  echo -e "password requisite pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3" >> /etc/pam.d/common-password
-  echo -e "password [success=1 default=ignore] pam_unix.so obscure use_authtok try_first_pass sha512" >> /etc/pam.d/common-password
-  echo -e "password required pam_permit.so" >> /etc/pam.d/common-password
-
+  echo -e "minlen=10
+  ucredit=-1
+  dcredit=-1
+  lcredit=-1
+  maxrepeat=3
+  reject_username
+  difok=7
+  enforce_for_root"
 fi
 sleep 1 & wait
 
