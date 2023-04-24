@@ -127,7 +127,7 @@ if [[ $distro == 2 ]]; then
 elif [[ $distro == 1 ]]; then
 	# Debian
 	distro_check_and_install "libpam-pwquality"
-	sed -i '/retry=3/ s/$/ difok=7 minlen=10 dcredit=-1 ucredit=-1 lcredit=-1 maxrepeat=2 enforce_for_root' /etc/pam.d/common-password
+	sed -i '/retry=3/ s/$/ difok=7 minlen=10 dcredit=-1 ucredit=-1 lcredit=-1 maxrepeat=2 enforce_for_root/' /etc/pam.d/common-password
 fi
 sleep 1 & wait
 
