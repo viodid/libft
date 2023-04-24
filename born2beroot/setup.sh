@@ -209,7 +209,7 @@ sleep 1 & wait
 echo "Adding monitoring.sh to crontab..."
 cp ./monitoring.sh /home/${username}/
 chmod 775 /home/${username}/monitoring.sh
-echo -e "*/10 * * * * bash /home/${username}/monitoring.sh" > /etc/cron.d/monitoring
+echo -e "*/10 * * * * $username /home/${username}/monitoring.sh\n" > /etc/cron.d/monitoring
 systemctl restart crond > /dev/null
 sleep 1 & wait
 
