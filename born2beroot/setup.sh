@@ -173,7 +173,12 @@ if [[ $distro == 2 ]]; then
   echo -e "Configuring SELinux to allow the new port..."
   semanage port -a -t ssh_port_t -p tcp 4242
 fi
+# Check if sshd_config folder exists
+if [[ ! -d "/etc/ssh/sshd_config.d" ]]; then
+  mkdir /etc/ssh/sshd_config.d
+fi
 echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/sshd_config.d/born2beroot.conf
+echo -e "Port 4242\nPermitRootLogin no" > /etc/ssh/ssh_config.d/born2beroot.conf
 sleep 1 & wait
 echo -e "Delete root login from sshd_config..."
 [ -f "/etc/ssh/sshd_config.d/01-permitrootlogin.conf" ]\
