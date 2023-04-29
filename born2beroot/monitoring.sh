@@ -16,7 +16,7 @@ ctcp=$(cat /proc/net/sockstat{,6} | awk '$1 == "TCP:" {print $3}')
 ulog=$(users | wc -w)
 ip=$(hostname -I)
 mac=$(ip link show | awk '$1 == "link/ether" {print $2}')
-cmds=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
+cmds=$(sudo journalctl _COMM=sudo | grep COMMAND | wc -l)
 # broadcast the system information on all terminals
 wall "	#Architecture: $arc
 	#CPU physical: $pcpu
