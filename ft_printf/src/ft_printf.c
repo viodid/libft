@@ -12,6 +12,7 @@
 
 #include "../include/ft_printf.h"
 #include "../include/libft.h"
+#include <stdarg.h>
 
 /*
 • %c Prints a single character.
@@ -49,5 +50,7 @@ precision, 0 is assumed.
 
 int ft_printf(const char *str, ...)
 {
-  return (ft_strlen(str));
+	va_list ap;
+	va_start(ap, str);
+	return (ft_strlen(str));
 }

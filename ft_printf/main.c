@@ -1,11 +1,9 @@
-#include "include/ft_printf.h"
-#include "include/libft.h"
+#include <stdio.h>
+#include <stdarg.h>
 
-int main()
+int main(void)
 {
-  int i = ft_printf("hey there!");
-  ft_printf("%d",i);
-  int j = printf("hey there!");
-  printf("%d",j);
-  return (0);
+	char a = 'A';
+	printf("%c\n%c", a, 'B');
+	return (0);
 }
