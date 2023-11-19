@@ -6,15 +6,15 @@
 /*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 00:04:15 by dyunta            #+#    #+#             */
-/*   Updated: 2023/02/08 00:04:15 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/10/05 19:57:43 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-/* Outputs the integer ’n’ to the given file
-descriptor. */
-
+/*
+	Output the integer nb to the given file descriptor.
+*/
 void	ft_putnbr_fd(int nb, int fd)
 {
 	if (nb == -2147483648)
@@ -25,7 +25,7 @@ void	ft_putnbr_fd(int nb, int fd)
 	if (nb < 0)
 	{
 		ft_putchar_fd('-', fd);
-		ft_putnbr_fd(-nb, fd);
+		ft_putnbr_fd(nb * -1, fd);
 	}
 	else if (nb > 9)
 	{

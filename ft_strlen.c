@@ -6,18 +6,21 @@
 /*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 00:04:15 by dyunta            #+#    #+#             */
-/*   Updated: 2023/02/08 00:04:15 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/10/05 20:19:04 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
+/*
+	Takes a pointer to a str, and returns its length without the NULL char included.
+*/
 size_t	ft_strlen(const char *s)
 {
-	size_t	i;
+	size_t	len;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
 }

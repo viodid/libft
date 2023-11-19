@@ -6,20 +6,19 @@
 /*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 00:04:15 by dyunta            #+#    #+#             */
-/*   Updated: 2023/02/08 00:04:15 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/10/03 19:25:34 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-/* Allocates (with malloc(3)) and returns a string
-representing the integer received as an argument.
-Negative numbers must be handled. */
+#include <libft.h>
 
 static int	get_int_len(long long n);
 static char	*reverse_str(char *str, int index);
 static int	checkers(long long n, char *buffer);
 
+/* Allocates (with malloc(3)) and returns a string
+representing the integer received as an argument.
+Negative numbers must be handled. */
 char	*ft_itoa(int n)
 {
 	int			is_neg;

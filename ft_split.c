@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyunta <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:50:49 by dyunta            #+#    #+#             */
-/*   Updated: 2023/02/09 19:47:37 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/10/05 19:58:14 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
 static char		**ft_free_malloc(char **tab);
 static void		ft_next_word(char **next_word, size_t *next_word_len, char c);
 static size_t	ft_nu_words(char const *s, char c);
 
-/* Allocates (with malloc(3)) and returns an array
-of strings obtained by splitting ’s’ using the
-character ’c’ as a delimiter. The array must end
-with a NULL pointer. */
-
+/*
+	Allocates (with malloc(3)) and returns an array
+	of strings obtained by splitting ’s’ using the
+	character ’c’ as a delimiter. The array must end
+	with a NULL pointer.
+*/
 char	**ft_split(char const *s, char c)
 {
 	char	**tab;

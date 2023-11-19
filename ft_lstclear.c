@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyunta <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:50:49 by dyunta            #+#    #+#             */
-/*   Updated: 2023/01/10 16:51:31 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/10/03 19:27:41 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include <libft.h>
 
 /* Deletes and frees the given node and every
 successor of that node, using the function ’del’
 and free(3).
 Finally, the pointer to the list must be set to
 NULL. */
-
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
 	t_list	*ptr;

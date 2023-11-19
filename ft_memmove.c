@@ -6,7 +6,7 @@
 /*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 00:04:15 by dyunta            #+#    #+#             */
-/*   Updated: 2023/02/08 00:04:15 by dyunta           ###   ########.fr       */
+/*   Updated: 2023/10/05 19:38:26 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 // /20725573/what-is-overlapping-in-memmove-definition
 // https://aticleworld.com/memmove-function-implementation-in-c/
 
-#include "libft.h"
+#include <libft.h>
 
-/* The memmove() function copies len bytes from string src to string dst.
-     The two strings may overlap; the copy is always done in a non-destructive
-     manner. 
-	
-	The memmove() function returns the original value of dst.*/
+/*
+	The memmove() function copies len bytes from string src to string dst.
+	The two strings may overlap; the copy is always done in a non-destructive
+    manner.
 
+	The memmove() function returns the original value of dst.
+*/
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	char	*ptr;
