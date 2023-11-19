@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 /* Deletes and frees the given node and every
 successor of that node, using the function ’del’

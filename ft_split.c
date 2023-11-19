@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 static char		**ft_free_malloc(char **tab);
 static void		ft_next_word(char **next_word, size_t *next_word_len, char c);

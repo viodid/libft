@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 static int	get_int_len(long long n);
 static char	*reverse_str(char *str, int index);

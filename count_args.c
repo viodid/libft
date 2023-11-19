@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
-
 /*
  * Counts the total number of args in **argv.
  */

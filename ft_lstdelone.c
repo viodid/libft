@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 /* Takes as a parameter a node and frees the memory of
 the node’s content using the function ’del’ given

@@ -12,7 +12,7 @@
 
 // https://stackoverflow.com/questions/11598361/why-a-pointer-1-add-4-actually
 
-#include <libft.h>
+#include "libft.h"
 
 /*
 	Compares byte string s1 against byte string s2.
