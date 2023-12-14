@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyunta <dyunta@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 16:50:49 by dyunta            #+#    #+#             */
-/*   Updated: 2023/10/03 19:31:51 by dyunta           ###   ########.fr       */
+/*   Created: 2023/11/27 20:35:49 by dyunta            #+#    #+#             */
+/*   Updated: 2023/11/27 20:35:49 by dyunta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,35 @@
 list resulting of the successive applications of
 the function ’f’. The ’del’ function is used to
 delete the content of a node if needed. */
+
+static void	*ft_clear(void *i, t_list *new_list, void del(void *))
+{
+	(del)(i);
+	ft_lstclear(&new_list, del);
+	return (0);
+}
+
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*ptr;
 	t_list	*new;
+	t_list	*tmp;
+	void	*i;
 
-	if (!lst)
+	i = 0;
+	if (!lst || !f)
 		return (NULL);
 	new = NULL;
 	while (lst)
 	{
-		ptr = ft_lstnew(lst->content);
-		if (!ptr)
+		i = f(lst->content);
+		if (!i)
+			return (ft_clear(i, new, del));
+		tmp = ft_lstnew(i);
+		if (!tmp)
 		{
-			del(lst);
-			return (NULL);
+			return (ft_clear(i, new, del));
 		}
-		f(ptr->content);
-		ft_lstadd_back(&new, ptr);
+		ft_lstadd_back(&new, tmp);
 		lst = lst->next;
 	}
 	return (new);
