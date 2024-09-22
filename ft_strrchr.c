@@ -13,7 +13,7 @@
 #include "libft.h"
 
 /* 
-	Locates the first occurrence of c (converted to a char) in the string
+	Locates the last occurrence of c (converted to a char) in the string
 	pointed to by s.
 
 	The terminating null character is considered part of the string;
